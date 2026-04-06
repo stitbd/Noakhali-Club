@@ -1,0 +1,79 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.banner {
+  position: relative;
+  padding: $space-3xl 0;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%, rgba($brand-gold, 0.07) 0%, transparent 70%),
+    linear-gradient(135deg, #0a0a0a 0%, $surface-card 50%, #0a0a0a 100%);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid $border-subtle;
+    border-bottom: 1px solid $border-subtle;
+  }
+}
+
+// ── Full-width wrapper ───────────────────────────────────
+.wrapper {
+  width: 100%;
+  padding: 0 $space-lg;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+
+  @include tablet { padding: 0 $space-md; }
+  @include mobile { padding: 0 $space-sm; }
+}
+
+.container { position: relative; z-index: 1; }
+
+.content { max-width: 640px; margin: 0 auto; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: $fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: $brand-gold;
+  margin-bottom: $space-md;
+  padding: 4px 16px;
+  border: 1px solid rgba($brand-gold, 0.3);
+  border-radius: $radius-pill;
+}
+
+.title {
+  font-family: $font-display;
+  font-size: $fs-3xl;
+  font-weight: 700;
+  color: $brand-white;
+  line-height: 1.2;
+  margin-bottom: $space-lg;
+
+  @include tablet { font-size: $fs-2xl; }
+}
+
+.desc {
+  font-size: $fs-md;
+  color: $text-light;
+  line-height: 1.8;
+  margin-bottom: $space-xl;
+}
+
+.actions {
+  display: flex;
+  gap: $space-md;
+  justify-content: center;
+  flex-wrap: wrap;
+}

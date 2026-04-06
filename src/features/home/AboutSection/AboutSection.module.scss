@@ -1,0 +1,146 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.about {
+  background: $surface-dark;
+  width: 100%;
+  padding: $space-3xl 0;
+
+  @include tablet { padding: $space-xl 0; }
+  @include mobile { padding: $space-lg 0; }
+}
+
+// ── Full-width wrapper ───────────────────────────────────
+.wrapper {
+  width: 100%;
+  padding: 0 $space-lg;
+  margin: 0 auto;
+
+  @include tablet { padding: 0 $space-md; }
+  @include mobile { padding: 0 $space-sm; }
+}
+
+// ── Image Grid ───────────────────────────────────────────────
+.imageGrid {
+  position: relative;
+  height: 480px;
+
+  @include tablet { height: 320px; margin-bottom: $space-xl; }
+}
+
+.imgBox {
+  position: absolute;
+  border-radius: $radius-md;
+  overflow: hidden;
+  border: 1px solid $border-subtle;
+
+  &--large { top: 0; left: 0; width: 75%; height: 75%; z-index: 1; }
+  &--small { top: 10%; right: 0; width: 38%; height: 42%; z-index: 2; }
+  &--small2 { bottom: 0; left: 10%; width: 50%; height: 38%; z-index: 2; }
+}
+
+.imgPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, $surface-mid, $surface-card);
+  @include flex-center;
+  flex-direction: column;
+  gap: $space-sm;
+
+  &--gold {
+    background: linear-gradient(135deg, rgba($brand-gold, 0.15), rgba($brand-gold, 0.05));
+  }
+
+  &--dark {
+    background: linear-gradient(135deg, #0a0a0a, $surface-mid);
+  }
+}
+
+.imgIcon { font-size: 2.5rem; }
+.imgLabel {
+  font-size: $fs-xs;
+  color: $text-muted;
+  text-align: center;
+  padding: 0 $space-md;
+}
+
+.badge {
+  position: absolute;
+  bottom: 10%;
+  right: 2%;
+  z-index: 3;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $brand-gold, $gold-dark);
+  @include flex-center;
+  flex-direction: column;
+  box-shadow: $shadow-gold;
+}
+
+.badgeYear {
+  font-family: $font-display;
+  font-size: $fs-md;
+  font-weight: 900;
+  color: $brand-black;
+  line-height: 1;
+}
+
+.badgeText {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($brand-black, 0.7);
+}
+
+// ── Pillars ──────────────────────────────────────────────────
+.pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-md;
+  margin-bottom: $space-xl;
+
+  @include mobile { grid-template-columns: 1fr; }
+}
+
+.pillar {
+  display: flex;
+  gap: $space-md;
+  align-items: flex-start;
+  padding: $space-md;
+  border-radius: $radius-md;
+  border: 1px solid $border-subtle;
+  background: $surface-card;
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    border-color: rgba($brand-gold, 0.3);
+    box-shadow: 0 4px 20px rgba($brand-gold, 0.08);
+  }
+}
+
+.pillarIcon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  @include flex-center;
+  background: rgba($brand-gold, 0.08);
+  border-radius: $radius-sm;
+}
+
+.pillarTitle {
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 700;
+  color: $brand-white;
+  margin-bottom: 2px;
+}
+
+.pillarDesc {
+  font-size: $fs-xs;
+  color: $text-muted;
+  margin: 0;
+  line-height: 1.6;
+}

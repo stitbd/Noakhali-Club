@@ -1,0 +1,14 @@
+@use '../styles/variables' as *;
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $surface-dark;
+}
+
+.main {
+  flex: 1;
+  // Offset for fixed navbar (~76px)
+  padding-top: 76px;
+}

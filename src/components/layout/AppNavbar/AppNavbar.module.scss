@@ -1,0 +1,189 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.navbar {
+  background: rgba($brand-black, 0.88) !important;
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border-bottom: 1px solid $border-subtle;
+  padding: 1rem 0;
+  transition: all 0.35s ease;
+  z-index: $z-sticky;
+
+  &--scrolled {
+    background: rgba($brand-black, 0.97) !important;
+    padding: 0.6rem 0;
+    border-bottom-color: rgba($brand-gold, 0.25);
+    box-shadow: 0 4px 24px rgba($brand-black, 0.6);
+  }
+}
+
+// ── Brand ──────────────────────────────────────────────────
+.brand {
+  @include flex-center;
+  gap: $space-sm;
+  text-decoration: none;
+
+  &:hover { text-decoration: none; }
+}
+
+.brandIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $brand-gold, $gold-dark);
+  @include flex-center;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba($brand-gold, 0.4);
+}
+
+.brandIconInner {
+  font-family: $font-display;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: $brand-black;
+  letter-spacing: 0.05em;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brandName {
+  font-family: $font-display;
+  font-size: $fs-md;
+  font-weight: 700;
+  color: $brand-white;
+  letter-spacing: 0.02em;
+}
+
+.brandTagline {
+  font-family: $font-body;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $brand-gold;
+}
+
+// ── Nav Links ──────────────────────────────────────────────
+.navLinks {
+  align-items: center;
+  gap: 0.25rem;
+
+  @include tablet {
+    padding: $space-md 0;
+    gap: 0.1rem;
+  }
+}
+
+.navLink {
+  display: inline-block;
+  font-family: $font-body;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($brand-white, 0.8) !important;
+  padding: 0.45rem 0.9rem !important;
+  border-radius: $radius-sm;
+  text-decoration: none;
+  transition: color $transition-fast, background $transition-fast;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0.9rem;
+    right: 0.9rem;
+    height: 2px;
+    background: $brand-gold;
+    border-radius: 1px;
+    transform: scaleX(0);
+    transition: transform $transition-base;
+    transform-origin: left;
+  }
+
+  &:hover {
+    color: $brand-gold !important;
+    background: rgba($brand-gold, 0.06);
+    &::after { transform: scaleX(1); }
+  }
+
+  &--active {
+    color: $brand-gold !important;
+    &::after { transform: scaleX(1); }
+  }
+
+  @include tablet {
+    display: block;
+    padding: 0.65rem 1rem !important;
+    &::after { display: none; }
+  }
+}
+
+// ── CTA Button ─────────────────────────────────────────────
+.ctaWrap {
+  margin-left: $space-sm;
+
+  @include tablet {
+    margin-left: 0;
+    margin-top: $space-sm;
+  }
+}
+
+.ctaBtn {
+  display: inline-block;
+  background: linear-gradient(135deg, $brand-gold, $gold-dark);
+  color: $brand-black !important;
+  font-family: $font-body;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.3rem;
+  border-radius: $radius-sm;
+  text-decoration: none;
+  transition: all $transition-base;
+
+  &:hover {
+    background: linear-gradient(135deg, $gold-light, $brand-gold);
+    box-shadow: $shadow-gold;
+    transform: translateY(-1px);
+    color: $brand-black !important;
+  }
+
+  @include tablet { width: 100%; text-align: center; }
+}
+
+// ── Mobile Toggle ──────────────────────────────────────────
+.toggle {
+  border: 1px solid $border-subtle !important;
+  padding: 6px 10px !important;
+  background: transparent !important;
+  border-radius: $radius-sm !important;
+  @include flex-center;
+  flex-direction: column;
+  gap: 5px;
+
+  &:focus { box-shadow: none !important; }
+}
+
+.toggleBar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: $brand-gold;
+  border-radius: 1px;
+  transition: all $transition-base;
+  transform-origin: center;
+
+  &--open {
+    &:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    &:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    &:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  }
+}

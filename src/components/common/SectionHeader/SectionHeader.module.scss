@@ -1,0 +1,66 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.header {
+  margin-bottom: $space-2xl;
+
+  &--centered {
+    text-align: center;
+  }
+
+  &--light {
+    .title { color: $brand-white; }
+    .description { color: $text-light; }
+  }
+}
+
+.subtitle {
+  display: inline-block;
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: $brand-gold;
+  margin-bottom: $space-sm;
+}
+
+.title {
+  font-family: $font-display;
+  font-size: $fs-3xl;
+  font-weight: 700;
+  color: $brand-white;
+  line-height: 1.15;
+  margin: 0;
+
+  @include tablet { font-size: $fs-2xl; }
+  @include mobile { font-size: $fs-xl; }
+}
+
+.divider {
+  width: 56px;
+  height: 3px;
+  background: linear-gradient(90deg, $brand-gold, $brand-red);
+  margin-top: $space-md;
+  margin-bottom: 0;
+  border-radius: 2px;
+
+  &--center {
+    @extend .divider;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.description {
+  margin-top: $space-lg;
+  font-size: $fs-md;
+  color: $text-light;
+  max-width: 640px;
+  line-height: 1.8;
+
+  .header--centered & {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
