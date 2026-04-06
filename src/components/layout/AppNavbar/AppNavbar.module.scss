@@ -27,22 +27,24 @@
   &:hover { text-decoration: none; }
 }
 
-.brandIcon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, $brand-gold, $gold-dark);
+// ✅ Updated: Logo container with transparent background
+.brandLogo {
+  width: 100%;
   @include flex-center;
   flex-shrink: 0;
-  box-shadow: 0 0 12px rgba($brand-gold, 0.4);
+  overflow: hidden;
+  transition: border-color $transition-base, box-shadow $transition-base;
+
 }
 
-.brandIconInner {
-  font-family: $font-display;
-  font-size: 0.8rem;
-  font-weight: 900;
-  color: $brand-black;
-  letter-spacing: 0.05em;
+// ✅ New: Logo image styles
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .brandText {

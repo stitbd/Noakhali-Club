@@ -10,6 +10,8 @@ import { NavLink, Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import useScrollPosition from '../../../hooks/useScrollPosition';
 import config from '../../../utils/config';
+// ✅ Import logo image from assets
+import logo from '../../../assets/logo.png';
 import styles from './AppNavbar.module.scss';
 
 const NAV_LINKS = [
@@ -40,12 +42,13 @@ const AppNavbar = () => {
       <Container>
         {/* ── Brand / Logo ───────────────────────────── */}
         <Navbar.Brand as={Link} to="/" className={styles.brand} onClick={() => setExpanded(false)}>
-          <div className={styles.brandIcon}>
-            <span className={styles.brandIconInner}>DBC</span>
-          </div>
-          <div className={styles.brandText}>
-            <span className={styles.brandName}>{config.site.name}</span>
-            <span className={styles.brandTagline}>Est. {config.site.foundedYear}</span>
+          {/* ✅ Logo Image with transparent background */}
+          <div className={styles.brandLogo}>
+            <img 
+              src={logo} 
+              alt={`${config.site.name} Logo`} 
+              className={styles.logoImg}
+            />
           </div>
         </Navbar.Brand>
 
