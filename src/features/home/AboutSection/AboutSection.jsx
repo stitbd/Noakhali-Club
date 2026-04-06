@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AppButton from '../../../components/common/AppButton';
 import SectionHeader from '../../../components/common/SectionHeader';
@@ -14,7 +14,10 @@ const PILLARS = [
 
 const AboutSection = () => (
   <section className={styles.about}>
-    <div className={styles.wrapper}>
+    {/* ── Full-width background layer ───────────────────── */}
+    <div className={styles.bg} />
+
+    <Container className={styles.wrapper}>
       <Row className="g-5 align-items-center">
         {/* ── Left: Image Collage ────────────────────────── */}
         <Col lg={5}>
@@ -22,7 +25,7 @@ const AboutSection = () => (
             <div className={`${styles.imgBox} ${styles['imgBox--large']}`}>
               <div className={styles.imgPlaceholder}>
                 <span className={styles.imgIcon}>⛵</span>
-                <span className={styles.imgLabel}>Club on the Buriganga</span>
+                <span className={styles.imgLabel}>Club on the Dhaka</span>
               </div>
             </div>
             <div className={`${styles.imgBox} ${styles['imgBox--small']}`}>
@@ -37,7 +40,7 @@ const AboutSection = () => (
             </div>
             {/* Founded badge */}
             <div className={styles.badge}>
-              <span className={styles.badgeYear}>1954</span>
+              <span className={styles.badgeYear}>2017</span>
               <span className={styles.badgeText}>Est.</span>
             </div>
           </div>
@@ -47,8 +50,8 @@ const AboutSection = () => (
         <Col lg={7}>
           <SectionHeader
             subtitle="Our Story"
-            title="A Club Built on Passion and the River"
-            description="Founded in 1954 on the banks of the Buriganga, Noakhali Club Dhaka Ltd has grown from a small group of river enthusiasts into Bangladesh's most prestigious aquatic sports and social institution."
+            title="A Club build a better society."
+            description="At the heart of Noakhali Club Dhaka lies a shared sense of community and purpose. Since beginning its journey on December 1st, 2017, the Club has stood as more than just a gathering place—it’s a second home where values, vision, and vibrant connections come together. "
           />
 
           <div className={styles.pillars}>
@@ -68,7 +71,7 @@ const AboutSection = () => (
           </AppButton>
         </Col>
       </Row>
-    </div>
+    </Container>
   </section>
 );
 
