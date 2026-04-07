@@ -1,14 +1,3 @@
-/**
- * SectionHeader — reusable section heading with subtitle + gold divider
- *
- * Props:
- *   subtitle   : string  (small label above title)
- *   title      : string
- *   description: string  (optional paragraph below)
- *   centered   : boolean (default: false)
- *   light      : boolean (white variant for dark sections)
- */
-
 import React from 'react';
 import styles from './SectionHeader.module.scss';
 
@@ -17,13 +6,13 @@ const SectionHeader = ({
   title,
   description,
   centered = false,
-  light = false,
+  variant = 'dark', // 'dark' (default) | 'light'
   className = '',
 }) => {
   const classes = [
     styles.header,
+    styles[`header--${variant}`],
     centered ? styles['header--centered'] : '',
-    light ? styles['header--light'] : '',
     className,
   ]
     .filter(Boolean)

@@ -1,207 +1,38 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
-// ── Hero ──────────────────────────────────────────────────────
-.hero {
-  position: relative;
-  min-height: 38vh;
-  @include flex-center;
-  flex-direction: column;
-  text-align: center;
-  overflow: hidden;
+.section {
   width: 100%;
-}
-
-.heroBg {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  height: 100%;
-  background:
-    radial-gradient(ellipse 70% 60% at 50% 100%, rgba($brand-gold, 0.08) 0%, transparent 70%),
-    linear-gradient(180deg, $surface-mid 0%, $surface-card 100%);
-  z-index: 0;
-
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, $brand-gold, $brand-red, $brand-gold, transparent);
-  }
-}
-
-.heroContent {
-  position: relative;
-  z-index: 1;
-  padding: $space-3xl $space-md;
-}
-
-.heroEyebrow {
-  font-size: $fs-xs;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: $brand-gold;
-  margin-bottom: $space-sm;
-}
-
-.heroTitle {
-  font-family: $font-display;
-  font-size: $fs-4xl;
-  font-weight: 900;
-  color: $brand-white;
-  margin-bottom: $space-md;
-  @include tablet { font-size: $fs-3xl; }
-  @include mobile { font-size: $fs-2xl; }
-}
-
-.heroDivider {
-  width: 64px;
-  height: 3px;
-  background: linear-gradient(90deg, $brand-gold, $brand-red);
-  margin: 0 auto $space-lg;
-  border-radius: 2px;
-}
-
-.heroDesc {
-  font-size: $fs-md;
-  color: $text-light;
-  max-width: 520px;
-  margin: 0 auto;
-  line-height: 1.8;
-}
-
-// ── President Section ─────────────────────────────────────────
-.presidentSection {
-  @include section-padding;
-  background: $surface-dark;
-}
-
-.presidentWrap {
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-// ── Committee Section ─────────────────────────────────────────
-.committeeSection {
-  @include section-padding;
   background: $surface-mid;
-  padding-top: $space-xl;
+  padding: $space-3xl 0;
+  @include tablet { padding: $space-2xl 0; }
 }
 
-// ── Member Card ───────────────────────────────────────────────
 .card {
   background: $surface-card;
   border: 1px solid $border-subtle;
   border-radius: $radius-md;
   padding: $space-xl;
   display: flex;
-  gap: $space-lg;
-  align-items: flex-start;
-  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
+  gap: $space-md;
+  align-items: center;
   height: 100%;
+  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: $shadow-hover;
-    border-color: rgba($brand-gold, 0.3);
-  }
-
-  &--featured {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border-color: rgba($brand-gold, 0.4);
-    background: linear-gradient(135deg, $surface-card, rgba($brand-gold, 0.03));
-    padding: $space-2xl;
-
-    &:hover {
-      box-shadow: $shadow-gold;
-    }
-  }
+  &:hover { transform: translateY(-4px); box-shadow: $shadow-hover; border-color: rgba($brand-gold, 0.3); }
 }
 
-// ── Avatar ───────────────────────────────────────────────────
 .avatar {
   flex-shrink: 0;
-  width: 56px;
-  height: 56px;
+  width: 52px; height: 52px;
   border-radius: 50%;
   background: linear-gradient(135deg, $surface-mid, $surface-dark);
   border: 2px solid $border-subtle;
   @include flex-center;
-
-  &--featured {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(135deg, $brand-gold, $gold-dark);
-    border-color: $brand-gold;
-    box-shadow: $shadow-gold;
-  }
 }
 
-.initials {
-  font-family: $font-display;
-  font-size: $fs-base;
-  font-weight: 700;
-  color: $text-light;
+.initials { font-family: $font-display; font-size: $fs-base; font-weight: 700; color: $text-light; }
 
-  .avatar--featured & {
-    font-size: $fs-xl;
-    color: $brand-black;
-  }
-}
-
-// ── Card Body ────────────────────────────────────────────────
-.cardBody {
-  flex: 1;
-  min-width: 0;
-}
-
-.goldBadge {
-  display: inline-block;
-  font-size: $fs-xs;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: $brand-black;
-  background: linear-gradient(135deg, $brand-gold, $gold-dark);
-  padding: 3px 14px;
-  border-radius: $radius-pill;
-  margin-bottom: $space-sm;
-}
-
-.name {
-  font-family: $font-display;
-  font-size: $fs-lg;
-  font-weight: 700;
-  color: $brand-white;
-  margin-bottom: 4px;
-  @include truncate(2);
-}
-
-.role {
-  font-size: $fs-sm;
-  font-weight: 700;
-  color: $brand-gold;
-  letter-spacing: 0.05em;
-  margin-bottom: 4px;
-}
-
-.tenure {
-  font-size: $fs-xs;
-  color: $text-muted;
-  margin-bottom: $space-sm;
-}
-
-.bio {
-  font-size: $fs-sm;
-  color: $text-light;
-  line-height: 1.75;
-  margin: 0;
-}
+.body { min-width: 0; }
+.name { font-family: $font-display; font-size: $fs-base; font-weight: 700; color: $brand-white; margin-bottom: 4px; }
+.role { font-size: $fs-xs; font-weight: 700; color: $brand-gold; letter-spacing: 0.05em; margin: 0; }

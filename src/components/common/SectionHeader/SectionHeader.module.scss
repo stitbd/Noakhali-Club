@@ -8,9 +8,17 @@
     text-align: center;
   }
 
-  &--light {
+  // Text adapts to background via variant
+  &--dark {
     .title { color: $brand-white; }
+    .subtitle { color: $brand-gold; }
     .description { color: $text-light; }
+  }
+
+  &--light {
+    .title { color: $brand-black; }
+    .subtitle { color: $brand-gold; }
+    .description { color: $text-muted; }
   }
 }
 
@@ -21,7 +29,6 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: $brand-gold;
   margin-bottom: $space-sm;
 }
 
@@ -29,7 +36,6 @@
   font-family: $font-display;
   font-size: $fs-3xl;
   font-weight: 700;
-  color: $brand-white;
   line-height: 1.15;
   margin: 0;
 
@@ -55,7 +61,6 @@
 .description {
   margin-top: $space-lg;
   font-size: $fs-md;
-  color: $text-light;
   max-width: 640px;
   line-height: 1.8;
 

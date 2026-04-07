@@ -1,27 +1,19 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
+/* ── Section: full-width background ────────────────────────── */
 .section {
-  background: $surface-mid;
   width: 100%;
+  background: $surface-mid;
   padding: $space-3xl 0;
 
-  @include tablet { padding: $space-xl 0; }
-  @include mobile { padding: $space-lg 0; }
-}
-
-// ── Full-width wrapper ───────────────────────────────────
-.wrapper {
-  width: 100%;
-  padding: 0 $space-lg;
-  margin: 0 auto;
-
-  @include tablet { padding: 0 $space-md; }
-  @include mobile { padding: 0 $space-sm; }
+  @include tablet { padding: $space-2xl 0; }
+  @include mobile { padding: $space-xl 0; }
 }
 
 .header { margin-bottom: $space-xl; }
 
+/* ── Cards ──────────────────────────────────────────────────── */
 .card {
   background: $surface-card;
   border: 1px solid $border-subtle;
@@ -30,16 +22,14 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
   position: relative;
   overflow: hidden;
+  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
 
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 2px;
     background: linear-gradient(90deg, $brand-gold, $brand-red);
     transform: scaleX(0);
@@ -51,7 +41,6 @@
     transform: translateY(-6px);
     box-shadow: $shadow-hover;
     border-color: rgba($brand-gold, 0.3);
-
     &::before { transform: scaleX(1); }
   }
 }
@@ -59,38 +48,16 @@
 .cardIcon {
   font-size: 2.4rem;
   margin-bottom: $space-md;
-  width: 60px;
-  height: 60px;
+  width: 60px; height: 60px;
   @include flex-center;
   background: rgba($brand-gold, 0.08);
   border-radius: $radius-sm;
   border: 1px solid rgba($brand-gold, 0.15);
 }
 
-.cardTag {
-  font-size: $fs-xs;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: $brand-gold;
-  margin-bottom: $space-sm;
-}
-
-.cardTitle {
-  font-family: $font-display;
-  font-size: $fs-lg;
-  font-weight: 700;
-  color: $brand-white;
-  margin-bottom: $space-sm;
-}
-
-.cardDesc {
-  font-size: $fs-sm;
-  color: $text-muted;
-  line-height: 1.7;
-  flex: 1;
-  margin-bottom: $space-md;
-}
+.cardTag   { font-size: $fs-xs; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: $brand-gold; margin-bottom: $space-sm; }
+.cardTitle { font-family: $font-display; font-size: $fs-lg; font-weight: 700; color: $brand-white; margin-bottom: $space-sm; }
+.cardDesc  { font-size: $fs-sm; color: $text-muted; line-height: 1.7; flex: 1; margin-bottom: $space-md; }
 
 .cardLink {
   display: inline-flex;
@@ -100,17 +67,10 @@
   font-weight: 700;
   color: $brand-gold;
   text-decoration: none;
-  transition: gap $transition-fast;
   margin-top: auto;
+  transition: gap $transition-fast, color $transition-fast;
 
-  &:hover {
-    gap: 10px;
-    color: $gold-light;
-    text-decoration: none;
-  }
+  &:hover { gap: 10px; color: $gold-light; text-decoration: none; }
 }
 
-.cta {
-  text-align: center;
-  margin-top: $space-2xl;
-}
+.cta { text-align: center; margin-top: $space-2xl; }
