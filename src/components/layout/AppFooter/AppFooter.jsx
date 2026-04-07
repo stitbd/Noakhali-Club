@@ -127,10 +127,6 @@ const AppFooter = () => {
                     {config.site.email}
                   </a>
                 </li>
-                <li>
-                  <span className={styles.contactIcon}>🕐</span>
-                  <span>Mon – Fri: 8:00 AM – 10:00 PM<br />Weekends: 7:00 AM – 11:00 PM</span>
-                </li>
               </ul>
             </Col>
           </Row>
