@@ -1,17 +1,20 @@
 // ─── Brand Colors ───────────────────────────────────────────
-$brand-gold:    #E48C00;
+$brand-gold:    #cf9a61;
 $brand-black:   #000000;
 $brand-red:     #FF0000;
 $brand-white:   #FFFFFF;
 
 // ─── Extended Palette ───────────────────────────────────────
-$gold-light:    #F5A623;
-$gold-dark:     #B36E00;
-$gold-muted:    #F0C060;
+$gold-light:    #e5b88d;
+$gold-dark:     #a85a3a;
+$gold-muted:    #d4a875;
+$btn-primary:   #ec1b23;
+$btn-light:     #f55563;
+$btn-dark:      #a71419;
 $surface-dark:  #0D0D0D;
 $surface-mid:   #1A1A1A;
 $surface-card:  #111111;
-$border-subtle: rgba(228, 140, 0, 0.18);
+$border-subtle: rgba(207, 154, 97, 0.18);
 $text-muted:    #999999;
 $text-light:    #CCCCCC;
 
@@ -47,8 +50,8 @@ $radius-pill: 999px;
 
 // ─── Shadows ─────────────────────────────────────────────────
 $shadow-card:   0 4px 24px rgba(0,0,0,0.4);
-$shadow-gold:   0 0 24px rgba(228,140,0,0.25);
-$shadow-hover:  0 8px 40px rgba(228,140,0,0.35);
+$shadow-gold:   0 0 24px rgba(207,154,97,0.25);
+$shadow-hover:  0 8px 40px rgba(207,154,97,0.35);
 
 // ─── Transitions ─────────────────────────────────────────────
 $transition-fast:   150ms ease;

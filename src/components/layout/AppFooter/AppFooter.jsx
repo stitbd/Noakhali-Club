@@ -7,7 +7,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import config from '../../../utils/config';
-// ✅ Import logo image from assets
 import logo from '../../../assets/logo.png';
 import styles from './AppFooter.module.scss';
 
@@ -114,6 +113,12 @@ const AppFooter = () => {
                   <span className={styles.contactIcon}>📞</span>
                   <a href={`tel:${config.site.phone}`} className={styles.contactLink}>
                     {config.site.phone}
+                  </a>
+                </li>
+                <li>
+                  <span className={styles.contactIcon}>📞</span>
+                  <a href={`tel:${config.site.telephone}`} className={styles.contactLink}>
+                    {config.site.telephone}
                   </a>
                 </li>
                 <li>

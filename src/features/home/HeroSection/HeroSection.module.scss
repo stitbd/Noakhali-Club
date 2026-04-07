@@ -1,227 +1,332 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
-/* ── Section: full 100vw × 100vh ────────────────────────────── */
 .hero {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  height: 100vh;
+  min-height: 700px;
   overflow: hidden;
-  background: #080808;
+  display: flex;
+  align-items: center;
 }
 
-/* ── Background fills 100vw regardless of Container ─────────── */
-.bg {
+/* Background Container */
+.bgContainer {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
+  left: 0;
+  width: 100%;
   height: 100%;
   z-index: 0;
 }
 
-.bgDots {
+.bgSlide {
   position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba($brand-gold, 0.045) 1px, transparent 1px);
-  background-size: 36px 36px;
-}
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(1.1);
+  transition: opacity 1.2s ease-in-out, transform 6s ease;
 
-.bgGlow {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 55% 55% at 72% 38%, rgba($brand-gold, 0.09) 0%, transparent 65%),
-    radial-gradient(ellipse 35% 40% at 15% 70%, rgba($brand-red,  0.05) 0%, transparent 60%);
-}
+  &.active {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-.bgFade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 55%, rgba(#080808, 0.55) 85%, #080808 100%);
-}
-
-/* ── Decorative accents ─────────────────────────────────────── */
-.decorLine {
-  position: absolute;
-  top: 0; left: 0;
-  width: 3px; height: 48%;
-  background: linear-gradient(to bottom, transparent, $brand-gold 40%, transparent);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.decorCircle {
-  position: absolute;
-  top: -140px; right: -140px;
-  width: 560px; height: 560px;
-  border-radius: 50%;
-  border: 1px solid rgba($brand-gold, 0.06);
-  z-index: 1;
-  pointer-events: none;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 48px;
-    border-radius: 50%;
-    border: 1px solid rgba($brand-gold, 0.08);
+  &.fadeOut {
+    opacity: 0;
   }
 }
 
-/* ── Bootstrap Container override for hero ──────────────────── */
-/* Makes the Container flex and vertically centred */
-.inner {
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: 1;
+}
+
+/* Container */
+.container {
   position: relative;
   z-index: 2;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 10vh;
-  padding-bottom: $space-3xl;
-}
-
-/* ── Text block ─────────────────────────────────────────────── */
-.content {
-  max-width: 720px;
-  transition: opacity 0.45s ease, transform 0.45s ease;
-
-  &--fade { opacity: 0; transform: translateY(14px); }
-}
-
-.preTitle {
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: $space-md;
-  margin-bottom: $space-md;
+  justify-content: center;
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
-.preLine  { flex: 0 0 44px; height: 1px; background: $brand-gold; }
-.preText  { font-family: $font-body; font-size: $fs-xs; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: $brand-gold; }
-
-.subheadline { font-family: $font-body; font-size: $fs-sm; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: $brand-red; margin-bottom: $space-sm; }
-
-.headline {
-  font-family: $font-display;
-  font-size: clamp(2.5rem, 5.5vw, 4.75rem);
-  font-weight: 900;
-  color: $brand-white;
-  line-height: 1.05;
-  letter-spacing: -0.015em;
-  margin: 0;
+.content {
+  max-width: 900px;
+  animation: fadeInUp 1s ease-out;
 }
 
-.divider {
-  width: 72px; height: 3px;
-  background: linear-gradient(90deg, $brand-gold, $brand-red);
-  border-radius: 2px;
-  margin: $space-lg 0;
-}
+/* Eyebrow */
+.eyebrow {
+  font-family: $font-body;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: $brand-gold;
+  margin-bottom: $space-lg;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 0.2s;
 
-.body {
-  font-size: clamp(1rem, 1.4vw, 1.125rem);
-  color: rgba($brand-white, 0.72);
-  line-height: 1.85;
-  max-width: 560px;
-  margin-bottom: $space-xl;
-}
-
-.ctas { display: flex; gap: $space-md; flex-wrap: wrap; margin-bottom: $space-xl; }
-
-/* ── Slide dots ─────────────────────────────────────────────── */
-.dots { display: flex; gap: $space-sm; align-items: center; }
-
-.dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  border: none;
-  background: rgba($brand-white, 0.22);
-  cursor: pointer;
-  padding: 0;
-  transition: all $transition-base;
-
-  &--active {
-    background: $brand-gold;
-    width: 26px;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba($brand-gold, 0.65);
+  @include mobile {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
   }
 }
 
-/* ── Stats bar ──────────────────────────────────────────────── */
-.statsBar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: rgba($brand-gold, 0.15);
-  border: 1px solid rgba($brand-gold, 0.15);
-  border-radius: $radius-md;
-  overflow: hidden;
-  margin-top: $space-3xl;
-
-  @include tablet { grid-template-columns: repeat(2, 1fr); }
-  @include mobile { grid-template-columns: repeat(2, 1fr); }
-}
-
-.stat {
+/* Headline */
+.headline {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: $space-lg $space-md;
-  background: rgba(#000, 0.55);
-  backdrop-filter: blur(8px);
-  text-align: center;
-  transition: background $transition-base;
-
-  &:hover { background: rgba($brand-gold, 0.07); }
+  gap: 0.25rem;
+  margin-bottom: $space-xl;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 0.4s;
 }
 
-.statValue { font-family: $font-display; font-size: clamp(1.5rem, 2.5vw, 2.25rem); font-weight: 900; color: $brand-gold; line-height: 1; margin-bottom: $space-xs; }
-.statLabel { font-family: $font-body; font-size: $fs-xs; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: $text-muted; }
+.headlineWhite {
+  font-family: $font-display;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  color: $brand-white;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
 
-/* ── Scroll hint ────────────────────────────────────────────── */
-.scrollHint {
+.headlineGold {
+  font-family: $font-display;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  color: $brand-gold;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Body */
+.body {
+  font-family: $font-body;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  color: rgba($brand-white, 0.9);
+  line-height: 1.7;
+  max-width: 650px;
+  margin: 0 auto $space-2xl;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 0.6s;
+
+  @include mobile {
+    padding: 0 $space-md;
+  }
+}
+
+/* CTA Button */
+.ctaWrapper {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 0.8s;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: 1rem 2.5rem !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.2em !important;
+  border-radius: 50px !important;
+  background: linear-gradient(135deg, $btn-primary, $btn-dark) !important;
+  color: $brand-white !important;
+  font-weight: 800 !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: $shadow-gold !important;
+    background: linear-gradient(135deg, $gold-light, $brand-gold) !important;
+    color: $brand-black !important;
+  }
+
+  @include mobile {
+    padding: 0.9rem 2rem !important;
+    font-size: 0.7rem !important;
+  }
+}
+
+.arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  
+  .ctaButton:hover & {
+    transform: translateX(5px);
+  }
+}
+
+/* Indicators */
+.indicators {
+  display: flex;
+  gap: $space-sm;
+  justify-content: center;
+  margin-top: $space-3xl;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 1s;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba($brand-gold, 0.5);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba($brand-gold, 0.3);
+  }
+
+  &.active {
+    background: $brand-gold;
+    border-color: $brand-gold;
+    transform: scale(1.2);
+  }
+}
+
+/* Scroll Indicator */
+.scrollIndicator {
   position: absolute;
-  bottom: $space-xl;
+  bottom: $space-2xl;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  animation: bounce 2.2s ease-in-out infinite;
-  pointer-events: none;
+  gap: $space-sm;
+  animation: bounce 2s ease-in-out infinite;
+  cursor: pointer;
 
-  @include mobile { display: none; }
+  @include tablet {
+    display: none;
+  }
 }
 
 .mouse {
-  width: 24px; height: 38px;
-  border: 2px solid rgba($brand-gold, 0.45);
-  border-radius: 12px;
-  @include flex-center;
+  width: 26px;
+  height: 42px;
+  border: 2px solid rgba($brand-gold, 0.6);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
 }
 
 .wheel {
-  width: 4px; height: 8px;
+  width: 4px;
+  height: 8px;
   background: $brand-gold;
   border-radius: 2px;
-  animation: wheelSpin 1.6s ease infinite;
+  animation: scroll 1.5s ease-in-out infinite;
 }
 
-.scrollText { font-family: $font-body; font-size: $fs-xs; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba($brand-gold, 0.55); }
+.scrollText {
+  font-family: $font-body;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba($brand-gold, 0.7);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 @keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(7px); }
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
+  }
 }
 
-@keyframes wheelSpin {
-  0%   { opacity: 1; transform: translateY(-4px); }
-  100% { opacity: 0; transform: translateY(7px); }
+@keyframes scroll {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.fadeUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Responsive */
+@include tablet {
+  .hero {
+    min-height: 600px;
+  }
+  
+  .container {
+    padding-top: 120px;
+    padding-bottom: 80px;
+  }
+}
+
+@include mobile {
+  .hero {
+    min-height: 500px;
+    height: auto;
+    padding: 150px 0 100px;
+  }
+  
+  .container {
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
+  
+  .indicators {
+    margin-top: $space-2xl;
+  }
 }

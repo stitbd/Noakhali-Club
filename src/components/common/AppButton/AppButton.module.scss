@@ -28,8 +28,8 @@
       }
     }
     &.btn--outline {
-      color: $brand-gold;
-      border-color: $brand-gold;
+      color: $btn-primary;
+      border-color: $btn-primary;
       &:hover:not(:disabled) {
         background: $brand-gold;
         color: $brand-black;
@@ -47,14 +47,14 @@
         background: rgba($brand-gold, 0.08);
       }
     }
-    // ✅ Outline button on light background - uses brand gold
+    // ✅ Outline button on light background - uses primary button color
     &.btn--outline {
-      color: $brand-gold;
-      border-color: $brand-gold;
+      color: $btn-primary;
+      border-color: $btn-primary;
       background: transparent; // White/transparent background
       
       &:hover:not(:disabled) {
-        background: $brand-gold; // Gold background on hover
+        background: $brand-gold; // Brand color background on hover
         color: $brand-black; // Dark text on hover for contrast
         box-shadow: $shadow-gold;
       }
@@ -63,8 +63,8 @@
 
   // ── Variants (core styles) ───────────────────────────────
   &--gold {
-    background: linear-gradient(135deg, $brand-gold, $gold-dark);
-    color: $brand-black;
+    background: linear-gradient(135deg, $btn-primary, $btn-dark);
+    color: $brand-white;
 
     &:hover:not(:disabled) {
       background: linear-gradient(135deg, $gold-light, $brand-gold);
@@ -80,8 +80,8 @@
 
   &--outline {
     background: transparent;
-    color: $brand-gold;
-    border: 1.5px solid $brand-gold;
+    color: $btn-primary;
+    border: 1.5px solid $btn-primary;
 
     &:hover:not(:disabled) {
       background: $brand-gold;

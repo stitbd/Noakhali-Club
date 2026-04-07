@@ -2,190 +2,307 @@
 @use '../../../styles/mixins' as *;
 
 .navbar {
-  background: rgba($brand-black, 0.88) !important;
-  backdrop-filter: blur(16px) saturate(1.5);
-  -webkit-backdrop-filter: blur(16px) saturate(1.5);
-  border-bottom: 1px solid $border-subtle;
-  padding: 1rem 0;
-  transition: all 0.35s ease;
-  z-index: $z-sticky;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 1400px;
+  z-index: 1040;
+  background: rgba($brand-black, 0.2) !important;
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border: 1px solid rgba($brand-white, 0.1);
+  border-radius: 50px;
+  padding: 0.75rem 2.5rem !important;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 20px rgba($brand-black, 0.15);
 
   &--scrolled {
-    background: rgba($brand-black, 0.97) !important;
-    padding: 0.6rem 0;
-    border-bottom-color: rgba($brand-gold, 0.25);
-    box-shadow: 0 4px 24px rgba($brand-black, 0.6);
+    top: 10px;
+    background: rgba($brand-black, 0.9) !important;
+    border-color: rgba($brand-gold, 0.3);
+    box-shadow: 0 8px 32px rgba($brand-black, 0.5);
+    padding: 0.6rem 2.5rem !important;
+  }
+
+  @include mobile {
+    top: 10px;
+    width: calc(100% - 20px);
+    border-radius: 20px;
+    padding: 0.6rem 1rem !important;
   }
 }
 
-// ── Brand ──────────────────────────────────────────────────
+.navContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem !important;
+  max-width: 100% !important;
+}
+
+// Brand
 .brand {
-  @include flex-center;
+  position: absolute;
+  left: 1rem;
+  display: flex;
+  align-items: center;
   gap: $space-sm;
   text-decoration: none;
-
-  &:hover { text-decoration: none; }
-}
-
-// ✅ Updated: Logo container with transparent background
-.brandLogo {
-  width: 100%;
-  @include flex-center;
+  z-index: 100;
   flex-shrink: 0;
-  overflow: hidden;
-  transition: border-color $transition-base, box-shadow $transition-base;
 
+  &:hover {
+    text-decoration: none;
+  }
 }
 
-// ✅ New: Logo image styles
+.brandLogo {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  @include mobile {
+    width: 38px;
+    height: 38px;
+  }
+}
+
 .logoImg {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 0;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
 }
 
-.brandText {
+// Nav Collapse - Full width
+.navCollapse {
   display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.brandName {
-  font-family: $font-display;
-  font-size: $fs-md;
-  font-weight: 700;
-  color: $brand-white;
-  letter-spacing: 0.02em;
-}
-
-.brandTagline {
-  font-family: $font-body;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: $brand-gold;
-}
-
-// ── Nav Links ──────────────────────────────────────────────
-.navLinks {
+  justify-content: center;
   align-items: center;
-  gap: 0.25rem;
+  width: 100%;
+  flex-wrap: wrap;
+  
+  @include tablet {
+    background: rgba($brand-black, 0.98);
+    border-radius: 16px;
+    margin-top: $space-md;
+    padding: $space-lg;
+    border: 1px solid rgba($brand-gold, 0.2);
+  }
+}
+
+// Center wrapper for nav items
+.navCenterWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  gap: 2rem;
+  flex-wrap: wrap;
 
   @include tablet {
-    padding: $space-md 0;
-    gap: 0.1rem;
+    flex-direction: column;
+    gap: $space-md;
+  }
+}
+
+// Nav Links
+.navLinks {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0;
+  flex-wrap: wrap;
+
+  @include tablet {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.25rem;
   }
 }
 
 .navLink {
-  display: inline-block;
   font-family: $font-body;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba($brand-white, 0.8) !important;
-  padding: 0.45rem 0.9rem !important;
-  border-radius: $radius-sm;
+  color: rgba($brand-white, 0.85) !important;
+  padding: 0.5rem 0.9rem !important;
+  border-radius: 8px;
   text-decoration: none;
-  transition: color $transition-fast, background $transition-fast;
+  transition: all 0.3s ease;
+  white-space: nowrap;
   position: relative;
 
   &::after {
     content: '';
     position: absolute;
     bottom: 4px;
-    left: 0.9rem;
-    right: 0.9rem;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
     height: 2px;
     background: $brand-gold;
-    border-radius: 1px;
-    transform: scaleX(0);
-    transition: transform $transition-base;
-    transform-origin: left;
+    transition: transform 0.3s ease;
   }
 
   &:hover {
     color: $brand-gold !important;
-    background: rgba($brand-gold, 0.06);
-    &::after { transform: scaleX(1); }
+    background: rgba($brand-gold, 0.08);
+    
+    &::after {
+      transform: translateX(-50%) scaleX(1);
+    }
   }
 
   &--active {
     color: $brand-gold !important;
-    &::after { transform: scaleX(1); }
+    background: rgba($brand-gold, 0.12);
+    
+    &::after {
+      transform: translateX(-50%) scaleX(1);
+    }
   }
 
   @include tablet {
     display: block;
+    width: 100%;
+    padding: 0.75rem 1.25rem !important;
+    text-align: center;
+    
+    &::after {
+      display: none;
+    }
+  }
+
+  @include mobile {
+    font-size: 0.7rem;
     padding: 0.65rem 1rem !important;
-    &::after { display: none; }
   }
 }
 
-// ── CTA Button ─────────────────────────────────────────────
+// CTA Button
 .ctaWrap {
-  margin-left: $space-sm;
+  flex-shrink: 0;
+  margin-left: 1rem;
 
   @include tablet {
     margin-left: 0;
     margin-top: $space-sm;
+    width: 100%;
   }
 }
 
 .ctaBtn {
   display: inline-block;
-  background: linear-gradient(135deg, $brand-gold, $gold-dark);
-  color: $brand-black !important;
+  background: linear-gradient(135deg, $btn-primary, $btn-dark);
+  color: $brand-white !important;
   font-family: $font-body;
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 0.5rem 1.3rem;
-  border-radius: $radius-sm;
+  padding: 0.65rem 1.6rem;
+  border-radius: 25px;
   text-decoration: none;
-  transition: all $transition-base;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba($btn-primary, 0.25);
 
   &:hover {
     background: linear-gradient(135deg, $gold-light, $brand-gold);
     box-shadow: $shadow-gold;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     color: $brand-black !important;
   }
 
-  @include tablet { width: 100%; text-align: center; }
+  @include tablet {
+    width: 100%;
+    text-align: center;
+  }
+
+  @include mobile {
+    padding: 0.6rem 1.4rem;
+    font-size: 0.68rem;
+  }
 }
 
-// ── Mobile Toggle ──────────────────────────────────────────
+// Mobile Toggle
 .toggle {
-  border: 1px solid $border-subtle !important;
+  position: absolute;
+  right: 1rem;
+  border: 1px solid rgba($brand-gold, 0.4) !important;
   padding: 6px 10px !important;
-  background: transparent !important;
-  border-radius: $radius-sm !important;
-  @include flex-center;
+  background: rgba($brand-black, 0.3) !important;
+  border-radius: 8px !important;
+  display: flex;
   flex-direction: column;
   gap: 5px;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  flex-shrink: 0;
 
-  &:focus { box-shadow: none !important; }
+  &:focus {
+    box-shadow: none !important;
+    outline: none;
+  }
 }
 
 .toggleBar {
   display: block;
-  width: 22px;
+  width: 20px;
   height: 2px;
   background: $brand-gold;
   border-radius: 1px;
-  transition: all $transition-base;
+  transition: all 0.3s ease;
   transform-origin: center;
 
   &--open {
-    &:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    &:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    &:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    &:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    &:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    &:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .navLink {
+    font-size: 0.68rem;
+    padding: 0.5rem 0.75rem !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    padding: 0.7rem 1.5rem !important;
+  }
+}
+
+@include mobile {
+  .navbar {
+    padding: 0.6rem 1rem !important;
+    
+    &--scrolled {
+      padding: 0.5rem 1rem !important;
+    }
+  }
+  
+  .navCenterWrapper {
+    gap: $space-md;
   }
 }

@@ -10,9 +10,10 @@ const config = {
   },
   site: {
     name: import.meta.env.VITE_APP_NAME || 'Noakhali Club Dhaka Ltd.',
-    tagline: 'Excellence on the Water Since 1954',
-    email: 'info@noakhaliclub.org',
-    phone: '+880-2-9337933, 9330963, 9353854',
+    tagline: 'Excellence on the Water Since 2017',
+    email: 'noakhlaiclubdhaka@yahoo.com',
+    telephone: '+880-2-9337933, 9330963, 9353854',
+    phone: '+88 01713005821, +88 01973005821',
     address: 'Sattara Center, 30/A, Naya Paltan, (9th Floor), V.I.P Road, Hotel Victory, Dhaka-1000, Bangladesh',
     foundedYear: 2017,
   },

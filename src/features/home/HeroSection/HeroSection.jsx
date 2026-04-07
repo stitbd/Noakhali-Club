@@ -4,90 +4,148 @@ import { Link } from 'react-router-dom';
 import AppButton from '../../../components/common/AppButton';
 import styles from './HeroSection.module.scss';
 
+import heroBg from '../../../assets/about-main.jpg';
+import heroBg2 from '../../../assets/about-main.jpg';
+import heroBg3 from '../../../assets/about-main.jpg';
+
 const SLIDES = [
-  { headline: 'Excellence on the Water',  subheadline: 'Since 1954',        body: 'A premier sporting and social institution fostering camaraderie, athletic achievement, and the timeless joy of life on the river.' },
-  { headline: 'World-Class Facilities',   subheadline: 'For Our Members',   body: 'From our Olympic-grade swimming pool to our fleet of racing boats, every facility is maintained to the highest international standard.' },
-  { headline: 'A Legacy of Champions',    subheadline: 'Sporting Tradition', body: 'Home to national champions and rising stars across rowing, swimming, and water polo — we cultivate greatness in every member.' },
+  {
+    image: heroBg,
+    eyebrow: 'EST. 2017 • FINEST CLUB',
+    headline: 'WELCOME TO Noakhali',
+    highlight: 'Club Dhaka',
+    body: 'Experience the pinnacle of recreation and prestige on the banks of the Turag.',
+    cta: 'EXPLORE MEMBERSHIP',
+    link: '/membership',
+  },
+  {
+    image: heroBg2,
+    eyebrow: 'PREMIER FACILITIES',
+    headline: 'WORLD-CLASS',
+    highlight: 'AMENITIES',
+    body: 'From Olympic-grade pools to fine dining, discover facilities that exceed expectations.',
+    cta: 'VIEW FACILITIES',
+    link: '/facilities',
+  },
+  {
+    image: heroBg3,
+    eyebrow: 'SINCE 2026',
+    headline: 'A LEGACY OF',
+    highlight: 'EXCELLENCE',
+    body: 'Join a distinguished community of members who value tradition, sport, and camaraderie.',
+    cta: 'JOIN THE CLUB',
+    link: '/membership',
+  },
 ];
 
 const HeroSection = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const [animating, setAnimating]     = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [loadedImages, setLoadedImages] = useState([]);
 
+  // Preload images
   useEffect(() => {
-    const id = setInterval(() => {
-      setAnimating(true);
-      setTimeout(() => { setActiveSlide(p => (p + 1) % SLIDES.length); setAnimating(false); }, 500);
-    }, 5000);
-    return () => clearInterval(id);
+    const images = [];
+    SLIDES.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.image;
+      images.push(img);
+    });
+    setLoadedImages(images);
   }, []);
 
-  const slide = SLIDES[activeSlide];
+  // Auto-advance slides
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setActiveSlide((prev) => (prev + 1) % SLIDES.length);
+        setIsAnimating(false);
+      }, 600);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentSlide = SLIDES[activeSlide];
 
   return (
-    /* section = full-width dark background */
     <section className={styles.hero}>
-      {/* Background fills 100vw */}
-      <div className={styles.bg} aria-hidden="true">
-        <div className={styles.bgDots} />
-        <div className={styles.bgGlow} />
-        <div className={styles.bgFade} />
+      {/* Background Slides */}
+      <div className={styles.bgContainer}>
+        {SLIDES.map((slide, index) => (
+          <div
+            key={index}
+            className={`${styles.bgSlide} ${
+              index === activeSlide ? styles.active : ''
+            } ${index === activeSlide && isAnimating ? styles.fadeOut : ''}`}
+            style={{ backgroundImage: `url(${slide.image})` }}
+          />
+        ))}
+        {/* Overlay */}
+        <div className={styles.overlay} />
       </div>
-      <div className={styles.decorLine}   aria-hidden="true" />
-      <div className={styles.decorCircle} aria-hidden="true" />
 
-      {/* Bootstrap Container keeps content readable */}
-      <Container className={styles.inner}>
-        {/* Text block */}
-        <div className={`${styles.content} ${animating ? styles['content--fade'] : ''}`}>
-          <div className={styles.preTitle}>
-            <span className={styles.preLine} />
-            <span className={styles.preText}>Noakhali Club Dhaka</span>
-            <span className={styles.preLine} />
+      <Container className={styles.container}>
+        <div className={styles.content}>
+          {/* Eyebrow */}
+          <div className={`${styles.eyebrow} ${isAnimating ? styles.fadeUp : ''}`}>
+            {currentSlide.eyebrow}
           </div>
 
-          <p className={styles.subheadline}>{slide.subheadline}</p>
-          <h1 className={styles.headline}>{slide.headline}</h1>
-          <div className={styles.divider} />
-          <p className={styles.body}>{slide.body}</p>
+          {/* Headline */}
+          <h1 className={`${styles.headline} ${isAnimating ? styles.fadeUp : ''}`}>
+            <span className={styles.headlineWhite}>{currentSlide.headline}</span>
+            <span className={styles.headlineGold}>{currentSlide.highlight}</span>
+          </h1>
 
-          <div className={styles.ctas}>
-            <AppButton as={Link} to="/reservation" variant="gold"    size="lg">Book a Reservation</AppButton>
-            <AppButton as={Link} to="/facilities"  variant="outline" size="lg">Explore Facilities</AppButton>
+          {/* Body */}
+          <p className={`${styles.body} ${isAnimating ? styles.fadeUp : ''}`}>
+            {currentSlide.body}
+          </p>
+
+          {/* CTA Button */}
+          <div className={`${styles.ctaWrapper} ${isAnimating ? styles.fadeUp : ''}`}>
+            <AppButton
+              as={Link}
+              to={currentSlide.link}
+              variant="gold"
+              size="lg"
+              className={styles.ctaButton}
+            >
+              {currentSlide.cta}
+              <span className={styles.arrow}>→</span>
+            </AppButton>
           </div>
 
-          <div className={styles.dots}>
-            {SLIDES.map((_, i) => (
+          {/* Slide Indicators */}
+          <div className={styles.indicators}>
+            {SLIDES.map((_, index) => (
               <button
-                key={i}
-                className={`${styles.dot} ${i === activeSlide ? styles['dot--active'] : ''}`}
-                onClick={() => setActiveSlide(i)}
-                aria-label={`Slide ${i + 1}`}
+                key={index}
+                className={`${styles.indicator} ${
+                  index === activeSlide ? styles.active : ''
+                }`}
+                onClick={() => {
+                  setIsAnimating(true);
+                  setTimeout(() => {
+                    setActiveSlide(index);
+                    setIsAnimating(false);
+                  }, 300);
+                }}
+                aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
         </div>
-
-        {/* Stats bar */}
-        <div className={styles.statsBar}>
-          {[
-            { value: '10+',    label: 'Years of Legacy' },
-            { value: '1,000+', label: 'Active Members'  },
-            { value: '20+',    label: 'Facilities'      },
-            { value: '15+',   label: 'Championships'   },
-          ].map(({ value, label }) => (
-            <div key={label} className={styles.stat}>
-              <span className={styles.statValue}>{value}</span>
-              <span className={styles.statLabel}>{label}</span>
-            </div>
-          ))}
-        </div>
       </Container>
 
-      {/* Scroll hint */}
-      <div className={styles.scrollHint} aria-hidden="true">
-        <div className={styles.mouse}><div className={styles.wheel} /></div>
-        <span className={styles.scrollText}>Scroll</span>
+      {/* Scroll Indicator */}
+      <div className={styles.scrollIndicator}>
+        <div className={styles.mouse}>
+          <div className={styles.wheel} />
+        </div>
+        <span className={styles.scrollText}>SCROLL</span>
       </div>
     </section>
   );

@@ -1,28 +1,20 @@
-/**
- * AppNavbar — site-wide navigation
- * - Transparent on top, solid on scroll
- * - Active link highlighting via React Router
- * - Mobile responsive with hamburger toggle
- */
-
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import useScrollPosition from '../../../hooks/useScrollPosition';
 import config from '../../../utils/config';
-// ✅ Import logo image from assets
 import logo from '../../../assets/logo.png';
 import styles from './AppNavbar.module.scss';
 
 const NAV_LINKS = [
   { to: '/',              label: 'Home',        end: true },
-  { to: '/about',         label: 'About'   },
+  { to: '/about',         label: 'About'        },
   { to: '/leadership',    label: 'EC Members'   },
   { to: '/facilities',    label: 'Facilities'   },
-  { to: '/menu',          label: 'Menu'  },
-  { to: '/events',        label: 'Events'  },
+  { to: '/menu',          label: 'Menu'         },
+  { to: '/events',        label: 'Events'       },
   { to: '/gallery',       label: 'Gallery'      },
-  { to: '/notice',        label: 'Notice'  },
+  { to: '/notice',        label: 'Notice'       },
 ];
 
 const AppNavbar = () => {
@@ -39,10 +31,14 @@ const AppNavbar = () => {
       className={`${styles.navbar} ${isScrolled ? styles['navbar--scrolled'] : ''}`}
       fixed="top"
     >
-      <Container>
-        {/* ── Brand / Logo ───────────────────────────── */}
-        <Navbar.Brand as={Link} to="/" className={styles.brand} onClick={() => setExpanded(false)}>
-          {/* ✅ Logo Image with transparent background */}
+      <Container fluid className={styles.navContainer}>
+        {/* Brand / Logo - Left Side */}
+        <Navbar.Brand 
+          as={Link} 
+          to="/" 
+          className={styles.brand} 
+          onClick={() => setExpanded(false)}
+        >
           <div className={styles.brandLogo}>
             <img 
               src={logo} 
@@ -52,7 +48,7 @@ const AppNavbar = () => {
           </div>
         </Navbar.Brand>
 
-        {/* ── Mobile Toggle ──────────────────────────── */}
+        {/* Mobile Toggle */}
         <Navbar.Toggle
           aria-controls="main-nav"
           className={styles.toggle}
@@ -62,26 +58,28 @@ const AppNavbar = () => {
           <span className={`${styles.toggleBar} ${expanded ? styles['toggleBar--open'] : ''}`} />
         </Navbar.Toggle>
 
-        {/* ── Nav Links ──────────────────────────────── */}
-        <Navbar.Collapse id="main-nav">
-          <Nav className={`ms-auto ${styles.navLinks}`}>
-            {NAV_LINKS.map(({ to, label, end }) => (
-              <Nav.Item key={to}>
-                <NavLink
-                  to={to}
-                  end={end}
-                  className={({ isActive }) =>
-                    `${styles.navLink} ${isActive ? styles['navLink--active'] : ''}`
-                  }
-                  onClick={() => setExpanded(false)}
-                >
-                  {label}
-                </NavLink>
-              </Nav.Item>
-            ))}
+        {/* Nav Links - Centered */}
+        <Navbar.Collapse id="main-nav" className={styles.navCollapse}>
+          <div className={styles.navCenterWrapper}>
+            <Nav className={styles.navLinks}>
+              {NAV_LINKS.map(({ to, label, end }) => (
+                <Nav.Item key={to}>
+                  <NavLink
+                    to={to}
+                    end={end}
+                    className={({ isActive }) =>
+                      `${styles.navLink} ${isActive ? styles['navLink--active'] : ''}`
+                    }
+                    onClick={() => setExpanded(false)}
+                  >
+                    {label}
+                  </NavLink>
+                </Nav.Item>
+              ))}
+            </Nav>
 
-            {/* ── CTA Button ─────────────────────────── */}
-            <Nav.Item className={styles.ctaWrap}>
+            {/* CTA Button */}
+            <div className={styles.ctaWrap}>
               <Link
                 to="/reservation"
                 className={styles.ctaBtn}
@@ -89,8 +87,8 @@ const AppNavbar = () => {
               >
                 Reservation
               </Link>
-            </Nav.Item>
-          </Nav>
+            </div>
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>

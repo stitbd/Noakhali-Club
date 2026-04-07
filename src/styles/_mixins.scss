@@ -61,8 +61,8 @@
 
 // ─── Button Gold ─────────────────────────────────────────────
 @mixin btn-gold {
-  background: linear-gradient(135deg, $brand-gold, $gold-dark);
-  color: $brand-black;
+  background: linear-gradient(135deg, $btn-primary, $btn-dark);
+  color: $brand-white;
   font-family: $font-body;
   font-weight: 700;
   font-size: $fs-sm;
@@ -75,10 +75,10 @@
   transition: all $transition-base;
 
   &:hover {
-    background: linear-gradient(135deg, $gold-light, $brand-gold);
-    box-shadow: $shadow-gold;
+    background: linear-gradient(135deg, $btn-light, $btn-primary);
+    box-shadow: 0 0 24px rgba(236, 27, 35, 0.35);
     transform: translateY(-1px);
-    color: $brand-black;
+    color: $brand-white;
   }
 }
 
