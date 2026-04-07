@@ -16,7 +16,52 @@
   white-space: nowrap;
   text-decoration: none;
 
-  // ── Variants ──────────────────────────────────────────────
+  // ── Background Context Modifiers ─────────────────────────
+  &--bg-dark {
+    &.btn--ghost {
+      color: $brand-white;
+      border-color: rgba($brand-white, 0.3);
+      &:hover:not(:disabled) {
+        border-color: $brand-gold;
+        color: $brand-gold;
+        background: rgba($brand-gold, 0.08);
+      }
+    }
+    &.btn--outline {
+      color: $brand-gold;
+      border-color: $brand-gold;
+      &:hover:not(:disabled) {
+        background: $brand-gold;
+        color: $brand-black;
+      }
+    }
+  }
+
+  &--bg-light {
+    &.btn--ghost {
+      color: #0f172a;
+      border-color: rgba(#0f172a, 0.3);
+      &:hover:not(:disabled) {
+        border-color: $brand-gold;
+        color: $brand-gold;
+        background: rgba($brand-gold, 0.08);
+      }
+    }
+    // ✅ Outline button on light background - uses brand gold
+    &.btn--outline {
+      color: $brand-gold;
+      border-color: $brand-gold;
+      background: transparent; // White/transparent background
+      
+      &:hover:not(:disabled) {
+        background: $brand-gold; // Gold background on hover
+        color: $brand-black; // Dark text on hover for contrast
+        box-shadow: $shadow-gold;
+      }
+    }
+  }
+
+  // ── Variants (core styles) ───────────────────────────────
   &--gold {
     background: linear-gradient(135deg, $brand-gold, $gold-dark);
     color: $brand-black;

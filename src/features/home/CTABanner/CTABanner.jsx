@@ -5,9 +5,7 @@ import AppButton from '../../../components/common/AppButton';
 import styles from './CTABanner.module.scss';
 
 const CTABanner = () => (
-  /* section = full-width background */
   <section className={styles.banner}>
-    {/* Bootstrap Container keeps content readable */}
     <Container className={styles.inner}>
       <div className={styles.content}>
         <span className={styles.eyebrow}>Become a Member</span>
@@ -17,8 +15,13 @@ const CTABanner = () => (
           Membership is an invitation to be part of Bangladesh's most storied club.
         </p>
         <div className={styles.actions}>
-          <AppButton as={Link} to="/reservation" variant="gold" size="lg">Apply for Membership</AppButton>
-          <AppButton as={Link} to="/facilities"  variant="ghost" size="lg">Explore the Club</AppButton>
+          <AppButton as={Link} to="/reservation" variant="gold" size="lg">
+            Apply for Membership
+          </AppButton>
+          {/* Changed to outline variant for white bg + gold border */}
+          <AppButton as={Link} to="/facilities" variant="outline" size="lg">
+            Explore the Club
+          </AppButton>
         </div>
       </div>
     </Container>

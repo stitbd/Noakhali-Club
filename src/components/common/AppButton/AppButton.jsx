@@ -1,20 +1,3 @@
-/**
- * AppButton — reusable button component
- * Wraps React-Bootstrap Button with consistent styling & variants
- *
- * Props:
- *   variant    : 'gold' | 'outline' | 'ghost' | 'danger' (default: 'gold')
- *   size       : 'sm' | 'md' | 'lg' (default: 'md')
- *   loading    : boolean
- *   disabled   : boolean
- *   fullWidth  : boolean
- *   as         : element type (e.g. 'a', Link)
- *   children   : React.ReactNode
- *   className  : string
- *   onClick    : function
- *   ...rest    : any other props forwarded to <Button>
- */
-
 import React from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import styles from './AppButton.module.scss';
@@ -22,6 +5,7 @@ import styles from './AppButton.module.scss';
 const AppButton = ({
   variant = 'gold',
   size = 'md',
+  bgVariant = 'dark', // 'dark' (default) | 'light' for white backgrounds
   loading = false,
   disabled = false,
   fullWidth = false,
@@ -35,6 +19,7 @@ const AppButton = ({
     styles.btn,
     styles[`btn--${variant}`],
     styles[`btn--${size}`],
+    styles[`btn--bg-${bgVariant}`], // Adds context-aware styling
     fullWidth ? styles['btn--full'] : '',
     className,
   ]
