@@ -42,7 +42,7 @@ const HeroSection = () => {
         <div className={`${styles.content} ${animating ? styles['content--fade'] : ''}`}>
           <div className={styles.preTitle}>
             <span className={styles.preLine} />
-            <span className={styles.preText}>Dhaka Boat Club</span>
+            <span className={styles.preText}>Noakhali Club Dhaka</span>
             <span className={styles.preLine} />
           </div>
 
@@ -71,10 +71,10 @@ const HeroSection = () => {
         {/* Stats bar */}
         <div className={styles.statsBar}>
           {[
-            { value: '70+',    label: 'Years of Legacy' },
-            { value: '5,000+', label: 'Active Members'  },
+            { value: '10+',    label: 'Years of Legacy' },
+            { value: '1,000+', label: 'Active Members'  },
             { value: '20+',    label: 'Facilities'      },
-            { value: '100+',   label: 'Championships'   },
+            { value: '15+',   label: 'Championships'   },
           ].map(({ value, label }) => (
             <div key={label} className={styles.stat}>
               <span className={styles.statValue}>{value}</span>

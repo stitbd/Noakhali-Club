@@ -11,7 +11,7 @@ const CTABanner = () => (
     <Container className={styles.inner}>
       <div className={styles.content}>
         <span className={styles.eyebrow}>Become a Member</span>
-        <h2 className={styles.title}>Join the Legacy of Dhaka Boat Club</h2>
+        <h2 className={styles.title}>Join the Legacy of Noakhali Club Dhaka</h2>
         <p className={styles.desc}>
           Experience unparalleled sports, social events, and riverside elegance.
           Membership is an invitation to be part of Bangladesh's most storied club.

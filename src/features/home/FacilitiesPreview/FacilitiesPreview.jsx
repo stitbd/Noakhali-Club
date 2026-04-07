@@ -23,7 +23,7 @@ const FacilitiesPreview = () => (
         <SectionHeader
           subtitle="What We Offer"
           title="World-Class Facilities"
-          description="Every facility at Dhaka Boat Club is designed to deliver an exceptional experience — from sporting performance to relaxed socialising."
+          description="Every facility at Noakhali Club Dhaka is designed to deliver an exceptional experience — from sporting performance to relaxed socialising."
           centered
         />
       </div>

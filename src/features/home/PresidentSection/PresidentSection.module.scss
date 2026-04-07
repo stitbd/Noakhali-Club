@@ -3,49 +3,146 @@
 
 .section {
   width: 100%;
-  background: $surface-dark;
+  background: $brand-white;
   padding: $space-3xl 0;
   @include tablet { padding: $space-2xl 0; }
 }
 
-.wrap { max-width: 640px; margin: 0 auto; }
+/* ── Left: Image Card ─────────────────────────────────────── */
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #000; // Ensures seamless blend if image has transparency
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
 
-.card {
-  background: $surface-card;
-  border: 1px solid rgba($brand-gold, 0.4);
-  border-radius: $radius-md;
-  padding: $space-2xl;
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $space-xl $space-lg;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
   display: flex;
   flex-direction: column;
+  gap: 4px;
+}
+
+.overlay .name {
+  font-family: $font-display;
+  font-size: $fs-xl;
+  font-weight: 700;
+  color: $brand-white;
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.overlay .role {
+  font-size: $fs-xs;
+  font-weight: 600;
+  color: $brand-gold;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+/* ── Right: Content ───────────────────────────────────────── */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  padding-left: $space-md;
+  @include tablet { padding-left: 0; }
+}
+
+.eyebrow {
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: $brand-gold;
+  margin-bottom: $space-xs;
+}
+
+.heading {
+  font-family: $font-display;
+  font-size: $fs-3xl;
+  font-weight: 800;
+  color: #0f172a; // Deep navy/black
+  line-height: 1.15;
+  margin: 0;
+  @include tablet { font-size: $fs-2xl; }
+}
+
+.gold {
+  color: $brand-gold;
+}
+
+.divider {
+  width: 56px;
+  height: 3px;
+  background: $brand-gold;
+  margin: $space-sm 0;
+  border-radius: 2px;
+}
+
+.quote {
+  margin: 0;
+  padding: $space-md 0 $space-md $space-lg;
+  border-left: 3px solid $brand-gold;
+  font-size: $fs-md;
+  font-style: italic;
+  color: #475569; // Slate gray
+  line-height: 1.75;
+}
+
+.bio {
+  font-size: $fs-sm;
+  color: #64748b;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.signature {
+  display: flex;
   align-items: center;
-  text-align: center;
-  box-shadow: $shadow-gold;
+  gap: $space-md;
+  margin-top: $space-lg;
+  padding-top: $space-md;
 }
 
-.avatar {
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, $brand-gold, $gold-dark);
-  border: 3px solid $brand-gold;
-  box-shadow: $shadow-gold;
-  @include flex-center;
-  margin-bottom: $space-lg;
+.sigLine {
+  width: 36px;
+  height: 2px;
+  background: $brand-gold;
+  flex-shrink: 0;
 }
 
-.initials { font-family: $font-display; font-size: $fs-xl; font-weight: 700; color: $brand-black; }
-
-.body { display: flex; flex-direction: column; align-items: center; }
-
-.badge {
-  display: inline-block; font-size: $fs-xs; font-weight: 700;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: $brand-black;
-  background: linear-gradient(135deg, $brand-gold, $gold-dark);
-  padding: 3px 14px; border-radius: $radius-pill;
-  margin-bottom: $space-sm;
+.sigName {
+  display: block;
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.05em;
 }
 
-.name   { font-family: $font-display; font-size: $fs-xl; font-weight: 700; color: $brand-white; margin-bottom: 4px; }
-.role   { font-size: $fs-sm; font-weight: 700; color: $brand-gold; margin-bottom: 4px; }
-.tenure { font-size: $fs-xs; color: $text-muted; margin-bottom: $space-sm; }
-.bio    { font-size: $fs-sm; color: $text-light; line-height: 1.75; margin: 0; }
+.sigTitle {
+  display: block;
+  font-size: $fs-xs;
+  color: #94a3b8;
+  margin-top: 2px;
+  letter-spacing: 0.05em;
+}
