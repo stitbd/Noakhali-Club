@@ -52,10 +52,10 @@ const validate = (values) => {
 };
 
 const INFO_ITEMS = [
-  { icon: '📞', label: 'Phone', value: '+880-2-XXXXXXX' },
-  { icon: '✉',  label: 'Email', value: 'reservations@dhakaboatclub.com' },
+  { icon: '📞', label: 'Phone', value: '+88 01713005821' },
+  { icon: '✉',  label: 'Email', value: 'noakhlaiclubdhaka@yahoo.com' },
   { icon: '🕐', label: 'Hours', value: 'Mon–Fri 9AM–6PM, Sat 9AM–3PM' },
-  { icon: '📍', label: 'Location', value: 'Segunbagicha, Dhaka 1000' },
+  { icon: '📍', label: 'Location', value: 'Sattara Center, 30/A, Naya Paltan, V.I.P Road, Hotel Victory, Dhaka-1000' },
 ];
 
 const ReservationPage = () => {

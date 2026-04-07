@@ -77,17 +77,35 @@
 }
 
 .heading {
-  font-family: $font-display;
-  font-size: $fs-3xl;
-  font-weight: 800;
-  color: #0f172a; // Deep navy/black
-  line-height: 1.15;
+  font-family: 'Sen', sans-serif;
+  font-size: 50px;
+  font-weight: 900;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
   margin: 0;
-  @include tablet { font-size: $fs-2xl; }
+  line-height: 1.15;
+  letter-spacing: normal;
+  
+  @include tablet { 
+    font-size: 48px; 
+  }
+  
+  @include mobile { 
+    font-size: 36px; 
+  }
 }
 
-.gold {
+.titlePart1 {
+  color: $brand-black;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.titlePart2 {
   color: $brand-gold;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .divider {

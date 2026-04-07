@@ -10,8 +10,8 @@ const PRESIDENT = {
   eyebrow: 'Leadership Insights',
   titlePart1: 'Message From',
   titlePart2: 'The President',
-  quote: "Welcome to Noakhali Club Dhaka Ltd (NCDL), the premier recreational boating and social club in Bangladesh. Our vision is to provide an elite sanctuary for our members, combining the passion for boating with world-class amenities.",
-  bio: "Since our establishment in 2017, we have dedicated ourselves to fostering a vibrant community of distinguished individuals. We invite you to explore our facilities, engage with our community, and experience the finest waterfront lifestyle on the shores of the Turag."
+  quote: "Welcome to Noakhali Club Dhaka Ltd (NCDL)—a destination where elegance meets community, and tradition blends seamlessly with modern leisure.",
+  bio: "Founded on December 1, 2017, Noakhali Club Dhaka Ltd (NCDL) was built on a vision of unity, purpose, and meaningful connection. More than a club, it has grown into a vibrant community where members come together to foster personal growth, cultural engagement, and social impact. Guided by the belief in building a better society, NCDL continues to inspire connection, collaboration, and a refined lifestyle experience."
 };
 
 const PresidentSection = () => (
@@ -34,7 +34,8 @@ const PresidentSection = () => (
           <div className={styles.content}>
             <span className={styles.eyebrow}>{PRESIDENT.eyebrow}</span>
             <h2 className={styles.heading}>
-              {PRESIDENT.titlePart1} <span className={styles.gold}>{PRESIDENT.titlePart2}</span>
+              <span className={styles.titlePart1}>{PRESIDENT.titlePart1}</span>{' '}
+              <span className={styles.titlePart2}>{PRESIDENT.titlePart2}</span>
             </h2>
             <div className={styles.divider} />
             

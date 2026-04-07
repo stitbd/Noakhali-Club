@@ -9,25 +9,29 @@ import { getInitials } from '../utils/helpers';
 import styles from './LeadershipPage.module.scss';
 
 const PRESIDENT = {
-  name: 'Commodore Abdur Rahim',
+  name: 'Mr. MD. Shahidul Ahsan',
   role: 'President',
-  tenure: '2023 – 2025',
-  bio: 'A distinguished leader with over three decades of association with Noakhali Club Dhaka Ltd, Commodore Abdur Rahim has guided the club through transformative growth and modernisation initiatives.',
+  tenure: '2020 – 2022',
+  bio: 'A distinguished leader with over three decades of association with Noakhali Club Dhaka Ltd, Mr. MD. Shahidul Ahsan has guided the club through transformative growth and modernisation initiatives.',
 };
 
 const COMMITTEE = [
-  { name: 'Vice Admiral (Retd.) Kamal Hossain', role: 'Vice President' },
-  { name: 'Brigadier (Retd.) Shafiqul Islam', role: 'General Secretary' },
-  { name: 'Mr. Tanvir Ahmed', role: 'Joint Secretary' },
-  { name: 'Mr. Rezaul Karim', role: 'Treasurer' },
-  { name: 'Mr. Anisur Rahman', role: 'Sports Secretary' },
-  { name: 'Mrs. Fatema Begum', role: 'Social & Cultural Secretary' },
-  { name: 'Mr. Shahidul Alam', role: 'House Secretary' },
-  { name: 'Mr. Monjurul Haque', role: 'Executive Member' },
-  { name: 'Mrs. Nasrin Akter', role: 'Executive Member' },
-  { name: 'Mr. Saidur Rahman', role: 'Executive Member' },
-  { name: 'Mr. Golam Mostafa', role: 'Executive Member' },
-  { name: 'Mr. Rafiqul Islam', role: 'Executive Member' },
+  { name: 'Mr. Mohd Ataur Rahman Bhuiyan', role: 'Vice-President' },
+  { name: 'Mr. Inamul Haq Khan', role: 'Vice-President' },
+  { name: 'Mr. Kabir Ahmed', role: 'Vice-President' },
+  { name: 'Mr. MD. Jamal Uddin', role: 'General Secretary' },
+  { name: 'Mr. Zafor Ahmed', role: 'Treasurer' },
+  { name: 'Mr. Abul Kalam Azad', role: 'Executive Member' },
+  { name: 'Mr. Khondoker Lutfor Rahman (Fatik)', role: 'Executive Member' },
+  { name: 'Mr. Abdullah Hil Rakib', role: 'Executive Member' },
+  { name: 'Mr. Mohammad Salim', role: 'Executive Member' },
+  { name: 'Mr. Ahmed Ullah', role: 'Executive Member' },
+  { name: 'Mr. MD. Kamal Uddin', role: 'Executive Member' },
+  { name: 'Mr. Sirajul Islam (Swapon)', role: 'Executive Member' },
+  { name: 'Md. Zakir Hossain Pervaz', role: 'Executive Member' },
+  { name: 'Dr. M Mokter Hossen', role: 'Executive Member' },
+  { name: 'Mohammed Shawkatullah Chowdhury', role: 'Executive Member' },
+  { name: 'Mr. MD. Mahfuzur Rahman (kiran)', role: 'Executive Member' },
 ];
 
 const MemberCard = ({ name, role, tenure, bio, featured = false }) => (

@@ -12,28 +12,28 @@ const SLIDES = [
   {
     image: heroBg,
     eyebrow: 'EST. 2017 • FINEST CLUB',
-    headline: 'WELCOME TO Noakhali',
-    highlight: 'Club Dhaka',
-    body: 'Experience the pinnacle of recreation and prestige on the banks of the Turag.',
+    headline: 'WELCOME TO ',
+    highlight: 'Noakhali Club Dhaka',
+    body: 'Want to build a better society',
     cta: 'EXPLORE MEMBERSHIP',
     link: '/membership',
   },
   {
     image: heroBg2,
-    eyebrow: 'PREMIER FACILITIES',
-    headline: 'WORLD-CLASS',
-    highlight: 'AMENITIES',
-    body: 'From Olympic-grade pools to fine dining, discover facilities that exceed expectations.',
-    cta: 'VIEW FACILITIES',
-    link: '/facilities',
+    eyebrow: 'EST. 2017 • FINEST CLUB',
+    headline: 'WELCOME TO ',
+    highlight: 'Noakhali Club Dhaka',
+    body: 'Want to build a better society',
+    cta: 'EXPLORE MEMBERSHIP',
+    link: '/membership',
   },
   {
     image: heroBg3,
-    eyebrow: 'SINCE 2026',
-    headline: 'A LEGACY OF',
-    highlight: 'EXCELLENCE',
-    body: 'Join a distinguished community of members who value tradition, sport, and camaraderie.',
-    cta: 'JOIN THE CLUB',
+    eyebrow: 'EST. 2017 • FINEST CLUB',
+    headline: 'WELCOME TO ',
+    highlight: 'Noakhali Club Dhaka',
+    body: 'Want to build a better society',
+    cta: 'EXPLORE MEMBERSHIP',
     link: '/membership',
   },
 ];
@@ -66,6 +66,40 @@ const HeroSection = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Scroll to next section
+  const scrollToNextSection = () => {
+    // Try to find the about section by looking for common patterns
+    let nextSection = document.querySelector('[class*="about"], [class*="About"]');
+
+    // If not found, try to find any section after hero
+    if (!nextSection) {
+      const allSections = document.querySelectorAll('section');
+      const heroSection = document.querySelector('[class*="hero"], [class*="Hero"]');
+      if (heroSection && allSections.length > 1) {
+        const sectionsArray = Array.from(allSections);
+        const heroIndex = sectionsArray.indexOf(heroSection);
+        if (heroIndex !== -1 && heroIndex + 1 < sectionsArray.length) {
+          nextSection = sectionsArray[heroIndex + 1];
+        }
+      }
+    }
+
+    // If still not found, scroll to a position below the hero
+    if (!nextSection) {
+      window.scrollTo({
+        top: window.innerHeight + 100, // Scroll past the hero section
+        behavior: 'smooth'
+      });
+      return;
+    }
+
+    // Scroll to the found section
+    nextSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
 
   const currentSlide = SLIDES[activeSlide];
 
@@ -117,31 +151,11 @@ const HeroSection = () => {
               <span className={styles.arrow}>→</span>
             </AppButton>
           </div>
-
-          {/* Slide Indicators */}
-          <div className={styles.indicators}>
-            {SLIDES.map((_, index) => (
-              <button
-                key={index}
-                className={`${styles.indicator} ${
-                  index === activeSlide ? styles.active : ''
-                }`}
-                onClick={() => {
-                  setIsAnimating(true);
-                  setTimeout(() => {
-                    setActiveSlide(index);
-                    setIsAnimating(false);
-                  }, 300);
-                }}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
         </div>
       </Container>
 
       {/* Scroll Indicator */}
-      <div className={styles.scrollIndicator}>
+      <div className={styles.scrollIndicator} onClick={scrollToNextSection}>
         <div className={styles.mouse}>
           <div className={styles.wheel} />
         </div>

@@ -6,12 +6,60 @@ import AppButton from '../../../components/common/AppButton';
 import styles from './FacilitiesPreview.module.scss';
 
 const FACILITIES = [
-  { icon: '🏊', title: 'Swimming Pool',        desc: 'Olympic-standard heated pools for training and leisure, open year-round.',                tag: 'Aquatics'     },
-  { icon: '⛵', title: 'Boat Jetty & Marina',  desc: 'State-of-the-art jetty accommodating sailing boats, motorboats, and kayaks.',             tag: 'Water Sports' },
-  { icon: '💪', title: 'Gym & Fitness Centre', desc: 'Fully equipped modern gymnasium with personal trainers available daily.',                  tag: 'Fitness'      },
-  { icon: '🍽️', title: 'Restaurant & Lounge',  desc: 'Fine dining and casual lounge offering Bangladeshi and international cuisines.',           tag: 'Dining'       },
-  { icon: '🎾', title: 'Sports Courts',         desc: 'Tennis, badminton, and squash courts for year-round competitive play.',                    tag: 'Sports'       },
-  { icon: '🎉', title: 'Banquet & Event Hall',  desc: 'Elegant event spaces for corporate gatherings, weddings, and gala nights.',               tag: 'Events'       },
+  {
+    id: 1,
+    icon: '🏛️',
+    title: 'Conference Hall',
+    category: 'Events',
+    tag: null,
+    desc: 'A fully equipped modern conference hall with state-of-the-art audiovisual systems, high-speed Wi-Fi, and executive seating. Perfect for corporate meetings, seminars, and private gatherings.',
+    features: ['AV equipment', 'High-speed Wi-Fi', 'Executive seating', 'Catering available'],
+  },
+  {
+    id: 2,
+    icon: '🥖',
+    title: 'Bakery',
+    category: 'Dining',
+    tag: null,
+    desc: 'Freshly baked artisanal breads, pastries, and cakes daily. Our master bakers use traditional techniques and premium ingredients to create delightful treats for members.',
+    features: ['Fresh daily', 'Artisanal breads', 'Custom cakes', 'Takeaway available'],
+  },
+  {
+    id: 3,
+    icon: '💪',
+    title: 'Gym & Fitness Centre',
+    category: 'Fitness',
+    tag: null,
+    desc: 'Modern gymnasium with premium cardio equipment, free weights, resistance machines, and a dedicated stretching and yoga studio. Personal trainers available.',
+    features: ['Latest equipment', 'Personal trainers', 'Yoga studio', 'Open 6AM – 10PM'],
+  },
+  {
+    id: 4,
+    icon: '🎾',
+    title: 'Indoor Sports',
+    category: 'Sports',
+    tag: null,
+    desc: 'Multi-purpose indoor sports arena featuring basketball, volleyball, and futsal courts with professional-grade flooring and lighting systems.',
+    features: ['Basketball court', 'Volleyball net', 'Futsal ready', 'Spectator area'],
+  },
+  {
+    id: 5,
+    icon: '🛋️',
+    title: 'Lobby',
+    category: 'Events',
+    tag: null,
+    desc: 'Elegantly designed central lobby with comfortable seating, ambient lighting, and a welcoming atmosphere. Ideal for informal meetings, reading, or relaxing.',
+    features: ['Comfortable seating', 'Ambient lighting', 'Reading area', 'Refreshment corner'],
+  },
+  {
+    id: 6,
+    icon: '📚',
+    title: 'Library',
+    category: 'Events',
+    tag: null,
+    desc: 'A quiet, well-stocked library with a vast collection of books, journals, and digital resources. Cozy reading nooks and study carrels for focused work.',
+    features: ['Wide book collection', 'Digital resources', 'Reading nooks', 'Silent study area'],
+  },
 ];
 
 const FacilitiesPreview = () => (
@@ -19,14 +67,14 @@ const FacilitiesPreview = () => (
   <section className={styles.section}>
     {/* Bootstrap Container keeps content readable */}
     <Container>
-      <div className={styles.header}>
         <SectionHeader
           subtitle="What We Offer"
-          title="World-Class Facilities"
-          description="Every facility at Noakhali Club Dhaka is designed to deliver an exceptional experience — from sporting performance to relaxed socialising."
-          centered
+            titlePart1="World-Class"
+            titlePart2="Facilities"
+            description="Every facility at Noakhali Club Dhaka is designed to deliver an exceptional experience — from sporting performance to relaxed socialising."
+            centered={true}
+            variant="dark"
         />
-      </div>
 
       <Row className="g-4">
         {FACILITIES.map(({ icon, title, desc, tag }) => (

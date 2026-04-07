@@ -44,9 +44,11 @@ const AboutSection = () => (
         <Col lg={7}>
           <SectionHeader
             subtitle="Our Story"
-            title="A Club Built for a Better Society"
+            titlePart1="A Club Built for"
+            titlePart2="a Better Society"
             description="Built on the belief that meaningful change begins with strong relationships, the Club serves as a hub for members striving to grow personally, socially, and intellectually."
-            variant="light" // 👈 Ensures dark text for the white background
+            variant="light"
+            centered={true}
           />
           <div className={styles.pillars}>
             {PILLARS.map(({ icon, title, desc }) => (
