@@ -5,13 +5,13 @@ import styles from './PresidentSection.module.scss';
 import presidentImg from '../../../assets/president.jpg';
 
 const PRESIDENT = {
-  name: 'MD. Shahidul Ahsan',
+  name: 'Mohd. Ataur Rahman Bhuiyan',
   title: 'President, NCDL',
   eyebrow: 'Leadership Insights',
   titlePart1: 'Message From',
   titlePart2: 'The President',
   quote: "Welcome to Noakhali Club Dhaka Ltd (NCDL)—a destination where elegance meets community, and tradition blends seamlessly with modern leisure.",
-  bio: "Founded on December 1, 2017, Noakhali Club Dhaka Ltd (NCDL) was built on a vision of unity, purpose, and meaningful connection. More than a club, it has grown into a vibrant community where members come together to foster personal growth, cultural engagement, and social impact. Guided by the belief in building a better society, NCDL continues to inspire connection, collaboration, and a refined lifestyle experience."
+  bio: "It is with great pleasure that I welcome you to the official website of Noakhali Club Dhaka Ltd. As the President of this esteemed Club, I am happy to extend my warmest greetings to each of you. It’s my privilege to lead our inclusive community of Members who share a common passion for excellence, camaraderie, and the pursuit of a dynamic and fulfilling lifestyle.  Remaining a central focal point for a wide range of social, cultural, and recreational activities within our cherished city. Whether you're seeking a serene environment to relax, a platform to network with like-minded individuals, or an opportunity to engage in sports and cultural events, Noakhali Club Dhaka Ltd has something special for you. It's a place where individuals from diverse backgrounds come together to celebrate life, make memories, and create meaningful relationships. At Noakhali Club Dhaka Ltd, we believe in the power of connections, the joy of shared experiences, and the beauty of lifelong friendships. "
 };
 
 const PresidentSection = () => (

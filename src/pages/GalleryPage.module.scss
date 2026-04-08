@@ -17,10 +17,13 @@
   background:
     radial-gradient(ellipse 70% 60% at 50% 100%, rgba($brand-gold, 0.07) 0%, transparent 70%),
     linear-gradient(180deg, $surface-mid 0%, $surface-card 100%);
+  
   &::before {
     content: '';
     position: absolute;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, $brand-gold, $brand-red, $brand-gold, transparent);
   }
@@ -42,11 +45,25 @@
 }
 
 .heroTitle {
-  font-family: $font-display;
-  font-size: $fs-4xl;
-  font-weight: 900;
-  color: $brand-white;
-  margin-bottom: $space-md;
+    font-family: "Sen", sans-serif;
+    font-size: 50px;
+    font-weight: 800;
+    font-style: normal;
+    font-variant: normal;
+    font-kerning: auto;
+    font-optical-sizing: auto;
+    font-stretch: 100%;
+    font-variation-settings: normal;
+    font-feature-settings: normal;
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    text-indent: 0px;
+  
   @include tablet { font-size: $fs-3xl; }
   @include mobile { font-size: $fs-2xl; }
 }
@@ -66,6 +83,7 @@
   margin: 0 auto;
   line-height: 1.8;
 }
+
 
 // ── Filter ────────────────────────────────────────────────────
 .filterSection {

@@ -117,19 +117,22 @@ const LeadershipPage = () => {
   const members = COMMITTEE.filter((m) => m.role !== 'President');
 
   return (
-    <>
-      {/* ── Page Hero ──────────────────────────────────────── */}
-      <div className={styles.hero}>
-        <div className={styles.heroBg} />
-        <Container className={styles.heroContent}>
-          <p className={styles.heroEyebrow}>Our Leadership</p>
-          <h1 className={styles.heroTitle}>Executive Committee</h1>
-          <div className={styles.heroDivider} />
-          <p className={styles.heroDesc}>
-            Guiding Noakhali Club Dhaka Ltd with vision, integrity, and an unwavering commitment to our members.
-          </p>
-        </Container>
-      </div>
+      <>
+        {/* ── Hero ──────────────────────────────────────────── */}
+        <div className={styles.hero}>
+          <div className={styles.heroBg} />
+          <Container className={styles.heroContent}>
+            <p className={styles.heroEyebrow}>Our Leadership</p>
+            <h1 className={styles.heroTitle}>Executive Committee</h1>
+            <div className={styles.heroDivider} />
+            <p className={styles.heroDesc}>
+              Guiding Noakhali Club Dhaka Ltd with vision, integrity, and an unwavering commitment to our members.
+            </p>
+          </Container>
+        </div>
+  
+  
+        {/* ── Description Section ──────────────────────────── */}
 
       {/* ── President ──────────────────────────────────────── */}
       <section className={styles.presidentSection}>

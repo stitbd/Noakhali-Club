@@ -29,6 +29,90 @@ $breakpoint-mobile: 576px;
   }
 }
 
+
+// ── Hero ─────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  min-height: 38vh;
+  @include flex-center;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 100%, rgba($brand-gold, 0.07) 0%, transparent 70%),
+    linear-gradient(180deg, $surface-mid 0%, $surface-card 100%);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $brand-gold, $brand-red, $brand-gold, transparent);
+  }
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  padding: $space-3xl $space-md;
+}
+
+.heroEyebrow {
+  font-size: $fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: $brand-gold;
+  margin-bottom: $space-sm;
+}
+
+.heroTitle {
+    font-family: "Sen", sans-serif;
+    font-size: 50px;
+    font-weight: 800;
+    font-style: normal;
+    font-variant: normal;
+    font-kerning: auto;
+    font-optical-sizing: auto;
+    font-stretch: 100%;
+    font-variation-settings: normal;
+    font-feature-settings: normal;
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    text-indent: 0px;
+  
+  @include tablet { font-size: $fs-3xl; }
+  @include mobile { font-size: $fs-2xl; }
+}
+
+.heroDivider {
+  width: 64px;
+  height: 3px;
+  background: linear-gradient(90deg, $brand-gold, $brand-red);
+  margin: 0 auto $space-lg;
+  border-radius: 2px;
+}
+
+.heroDesc {
+  font-size: $fs-md;
+  color: $text-light;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
 // ── Section ───────────────────────────────────────────────────────────────────
 .section {
   width: 100%;
@@ -279,69 +363,6 @@ $breakpoint-mobile: 576px;
   margin: 0;
 }
 
-// ── Hero Section ─────────────────────────────────────────────────────────────
-.hero {
-  position: relative;
-  padding: 6rem 0 4rem;
-  background: 
-    radial-gradient(ellipse at top, rgba($gold, 0.1) 0%, transparent 60%),
-    linear-gradient(180deg, $surface-mid, $surface-card);
-  text-align: center;
-  overflow: hidden;
-}
-
-.heroBg {
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba($gold, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba($gold, 0.06) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.heroContent {
-  position: relative;
-  z-index: 2;
-}
-
-.heroEyebrow {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: $gold;
-  margin: 0 0 1rem;
-}
-
-.heroTitle {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 3rem;
-  font-weight: 700;
-  color: $text-cream;
-  margin: 0 0 1.5rem;
-  line-height: 1.2;
-
-  @include mobile {
-    font-size: 2.2rem;
-  }
-}
-
-.heroDivider {
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, $gold, transparent);
-  margin: 0 auto 1.5rem;
-  border-radius: 2px;
-}
-
-.heroDesc {
-  font-size: 1.1rem;
-  color: $text-muted;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.7;
-}
-
 // ── Section Headers ──────────────────────────────────────────────────────────
 .presidentSection,
 .committeeSection {
@@ -354,4 +375,11 @@ $breakpoint-mobile: 576px;
   display: flex;
   justify-content: center;
   margin-top: 2rem;
+}
+
+// ── Description Section ───────────────────────────────────────
+.descriptionSection {
+  @include section-padding;
+  background: $surface-dark;
+  padding: 30px 0;
 }

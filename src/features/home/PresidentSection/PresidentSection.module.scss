@@ -40,7 +40,7 @@
 }
 
 .overlay .name {
-  font-family: $font-display;
+  font-family: 'Sen', sans-serif;
   font-size: $fs-xl;
   font-weight: 700;
   color: $brand-white;
@@ -123,13 +123,14 @@
   font-size: $fs-md;
   font-style: italic;
   color: #475569; // Slate gray
-  line-height: 1.75;
+  line-height: 1.5;
 }
 
 .bio {
   font-size: $fs-sm;
-  color: #64748b;
-  line-height: 1.8;
+  color: $brand-black;
+  line-height: 1.5;
+  text-align: justify;
   margin: 0;
 }
 
@@ -138,7 +139,6 @@
   align-items: center;
   gap: $space-md;
   margin-top: $space-lg;
-  padding-top: $space-md;
 }
 
 .sigLine {
