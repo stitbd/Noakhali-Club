@@ -9,18 +9,21 @@ import MainLayout from '../layouts/MainLayout';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 // ── Lazy-loaded page components (core) ──────────────────────────────
-const HomePage        = lazy(() => import('../pages/HomePage'));
-const LeadershipPage  = lazy(() => import('../pages/LeadershipPage'));
-const FacilitiesPage  = lazy(() => import('../pages/FacilitiesPage'));
-const GalleryPage     = lazy(() => import('../pages/GalleryPage'));
-const ReservationPage = lazy(() => import('../pages/ReservationPage'));
-const NotFoundPage    = lazy(() => import('../pages/NotFoundPage'));
+const HomePage              = lazy(() => import('../pages/HomePage'));
+const FacilitiesPage        = lazy(() => import('../pages/FacilitiesPage'));
+const GalleryPage           = lazy(() => import('../pages/GalleryPage'));
+const ReservationPage       = lazy(() => import('../pages/ReservationPage'));
+const NotFoundPage          = lazy(() => import('../pages/NotFoundPage'));
+const EventsPage            = lazy(() => import('../pages/EventsPage'));
+const MenuPage              = lazy(() => import('../pages/MenuPage'));
+const NoticePage            = lazy(() => import('../pages/NoticePage'));
 
 // ── About dropdown routes ──────────────────────────────────────────
-const AboutHistoryPage      = lazy(() => import('../pages/about/HistoryPage'));
-const AboutPresidentSpeech  = lazy(() => import('../pages/about/PresidentSpeechPage'));
+const HistoryPage           = lazy(() => import('../pages/about/HistoryPage'));
+const PresidentSpeechPage   = lazy(() => import('../pages/about/PresidentSpeechPage'));
 
-// ── Membership routes (EC Members dropdown) ────────────────────────
+// ── Membership routes (Members dropdown) ────────────────────────
+const LeadershipPage        = lazy(() => import('../pages/members/LeadershipPage'));
 const DonorMemberPage       = lazy(() => import('../pages/members/DonorMemberPage'));
 const LifeMemberPage        = lazy(() => import('../pages/members/LifeMemberPage'));
 const PermanentMemberPage   = lazy(() => import('../pages/members/PermanentMemberPage'));
@@ -31,10 +34,6 @@ const UseClubMemberPage     = lazy(() => import('../pages/members/UseClubMemberP
 const AssociateMemberPage   = lazy(() => import('../pages/members/AssociateMemberPage'));
 const DiplomateMemberPage   = lazy(() => import('../pages/members/DiplomateMemberPage'));
 
-// (Optional / existing): you might also add Events, Menu, Notice as needed
-const EventsPage = lazy(() => import('../pages/EventsPage'));
-const MenuPage = lazy(() => import('../pages/MenuPage'));
-const NoticePage = lazy(() => import('../pages/NoticePage'));
 
 // ── Page fallback ────────────────────────────────────────────
 const PageFallback = () => (
@@ -59,8 +58,8 @@ const router = createBrowserRouter([
       { index: true, element: withSuspense(HomePage) },
 
       // About routes (dropdown handled in navbar; define routes explicitly)
-      { path: 'about/history', element: withSuspense(AboutHistoryPage) },
-      { path: 'about/speech', element: withSuspense(AboutPresidentSpeech) },
+      { path: 'about/history', element: withSuspense(HistoryPage) },
+      { path: 'about/speech', element: withSuspense(PresidentSpeechPage) },
 
       // EC Members routes (including Executive Committee)
       { path: 'leadership', element: withSuspense(LeadershipPage) },

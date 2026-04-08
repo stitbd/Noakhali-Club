@@ -10,7 +10,7 @@
   width: calc(100% - 40px);
   max-width: 1400px;
   z-index: 1040;
-  background: rgba($brand-black, 0.2) !important;
+  background: rgba($brand-white, 0.2) !important;
   backdrop-filter: blur(20px) saturate(1.8);
   -webkit-backdrop-filter: blur(20px) saturate(1.8);
   border: 1px solid rgba($brand-white, 0.1);
@@ -82,26 +82,20 @@
 
 // Nav Collapse - Right Side
 .navCollapse {
-  display: flex !important;
   justify-content: flex-end;
-  align-items: center;
   flex-grow: 0;
 
   @include tablet {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    top: calc(100% + 10px);
+    left: 10px;
+    right: 10px;
     background: rgba($brand-black, 0.98);
-    border-radius: 16px;
-    margin-top: $space-sm;
+    border-radius: 20px;
     padding: $space-lg;
     border: 1px solid rgba($brand-gold, 0.2);
-    flex-direction: column;
-
-    &:not(.show) {
-      display: none !important;
-    }
+    backdrop-filter: blur(10px);
+    z-index: 1050;
   }
 }
 
@@ -251,63 +245,37 @@
   }
 }
 
-// Mobile Toggle - Right Side
+// Mobile Toggle - White icon
 .toggle {
-  border: 1px solid rgba($brand-gold, 0.4) !important;
-  padding: 6px 10px !important;
-  background: rgba($brand-black, 0.3) !important;
+  border: 1px solid rgba($brand-gold, 0.5) !important;
+  background: rgba($brand-white, 0.1) !important;
   border-radius: 8px !important;
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  flex-shrink: 0;
-  margin-left: auto;
-
+  padding: 8px 12px !important;
+  
   &:focus {
     box-shadow: none !important;
     outline: none;
   }
 
-  @include tablet {
-    display: flex;
+  // Make the default Bootstrap toggle icon white
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
   }
 }
 
-.toggleBar {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: $brand-gold;
-  border-radius: 1px;
-  transition: all 0.3s ease;
-  transform-origin: center;
-
-  &--open {
-    &:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    &:nth-child(2) {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-    &:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
-  }
-}
-
-// Scrolled toggle styles
+// When scrolled, toggle icon remains white or changes to dark
 .navbar--scrolled {
   .toggle {
+    border: 1px solid rgba($brand-gold, 0.5) !important;
     background: rgba($brand-white, 0.3) !important;
-    border-color: rgba($brand-gold, 0.5) !important;
+    
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
   }
 }
 
-// ============ Dropdown styles (new) ============
+// ============ Dropdown styles ============
 .dropdown {
   :global(.nav-link) {
     font-family: $font-body;
@@ -327,7 +295,7 @@
       background: rgba($brand-gold, 0.08);
     }
 
-    &.show {
+    &[aria-expanded="true"] {
       color: $brand-gold !important;
       background: rgba($brand-gold, 0.12);
     }
@@ -339,7 +307,7 @@
 
     &:hover,
     &:focus,
-    &.show {
+    &[aria-expanded="true"] {
       color: $brand-gold !important;
     }
   }
@@ -351,7 +319,7 @@
       text-align: center;
       color: rgba($brand-white, 0.9) !important;
 
-      &.show {
+      &[aria-expanded="true"] {
         background: rgba($brand-gold, 0.1) !important;
       }
     }
@@ -371,10 +339,13 @@
   box-shadow: 0 20px 40px rgba($brand-black, 0.6);
 
   @include tablet {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 6px 0 12px 0 !important;
     position: static !important;
     width: 100%;
-    margin: 6px 0 12px 0 !important;
-    background: rgba($brand-black, 0.92);
   }
 }
 
@@ -386,9 +357,9 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba($brand-black, 0.85) !important;
+  color: rgba($brand-white, 0.85) !important;
   border-radius: 10px;
-  padding: 0.6remrem !important;
+  padding: 0.6rem 1rem !important;
   transition: all 0.25s ease;
 
   &:hover {
@@ -399,10 +370,21 @@
 
   @include tablet {
     text-align: center;
+    justify-content: center;
+    color: rgba($brand-white, 0.85) !important;
+    
     &:hover {
       transform: none;
       background: rgba($brand-gold, 0.12) !important;
     }
+  }
+}
+
+// Ensure collapse shows on mobile
+@media (max-width: 992px) {
+  .navbar-collapse {
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
   }
 }
 

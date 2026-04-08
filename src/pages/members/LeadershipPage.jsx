@@ -1,27 +1,27 @@
 import React, { useEffect, useRef } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import SectionHeader from '../components/common/SectionHeader';
-import { getInitials } from '../utils/helpers';
+import SectionHeader from '../../components/common/SectionHeader';
+import { getInitials } from '../../utils/helpers';
 import styles from './LeadershipPage.module.scss';
 
-import imgPresident from '../assets/committee/president.jpg';
-import img01 from '../assets/committee/01.jpg';
-import img02 from '../assets/committee/02.jpg';
-import img03 from '../assets/committee/03.jpg';
-import img04 from '../assets/committee/04.jpg';
-import img05 from '../assets/committee/05.jpg';
-import img06 from '../assets/committee/06.jpg';
-import img07 from '../assets/committee/07.jpg';
-import img08 from '../assets/committee/08.jpg';
-import img09 from '../assets/committee/09.jpg';
-import img10 from '../assets/committee/10.jpg';
-import img11 from '../assets/committee/11.jpg';
-import img12 from '../assets/committee/12.jpg';
-import img13 from '../assets/committee/13.jpg';
-import img14 from '../assets/committee/14.jpg';
-import img15 from '../assets/committee/15.jpg';
-import img16 from '../assets/committee/16.jpg';
-import img17 from '../assets/committee/17.jpg';
+import imgPresident from '../../assets/committee/president.jpg';
+import img01 from '../../assets/committee/01.jpg';
+import img02 from '../../assets/committee/02.jpg';
+import img03 from '../../assets/committee/03.jpg';
+import img04 from '../../assets/committee/04.jpg';
+import img05 from '../../assets/committee/05.jpg';
+import img06 from '../../assets/committee/06.jpg';
+import img07 from '../../assets/committee/07.jpg';
+import img08 from '../../assets/committee/08.jpg';
+import img09 from '../../assets/committee/09.jpg';
+import img10 from '../../assets/committee/10.jpg';
+import img11 from '../../assets/committee/11.jpg';
+import img12 from '../../assets/committee/12.jpg';
+import img13 from '../../assets/committee/13.jpg';
+import img14 from '../../assets/committee/14.jpg';
+import img15 from '../../assets/committee/15.jpg';
+import img16 from '../../assets/committee/16.jpg';
+import img17 from '../../assets/committee/17.jpg';
 
 const PRESIDENT = {
   name: 'Mr. MD. Shahidul Ahsan',

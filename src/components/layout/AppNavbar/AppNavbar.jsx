@@ -51,7 +51,7 @@ const AppNavbar = () => {
     <Navbar
       expand="lg"
       expanded={expanded}
-      onToggle={setExpanded}
+      onToggle={() => setExpanded(!expanded)}
       className={`${styles.navbar} ${isScrolled ? styles['navbar--scrolled'] : ''}`}
       fixed="top"
     >
@@ -73,14 +73,10 @@ const AppNavbar = () => {
         </Navbar.Brand>
 
         {/* Mobile Toggle */}
-        <Navbar.Toggle
-          aria-controls="main-nav"
-          className={styles.toggle}
-        >
-          <span className={`${styles.toggleBar} ${expanded ? styles['toggleBar--open'] : ''}`} />
-          <span className={`${styles.toggleBar} ${expanded ? styles['toggleBar--open'] : ''}`} />
-          <span className={`${styles.toggleBar} ${expanded ? styles['toggleBar--open'] : ''}`} />
-        </Navbar.Toggle>
+        <Navbar.Toggle 
+          aria-controls="main-nav" 
+          className={styles.toggle} 
+        />
 
         {/* Nav Links - Right Side */}
         <Navbar.Collapse id="main-nav" className={styles.navCollapse}>
@@ -112,10 +108,6 @@ const AppNavbar = () => {
                   title={label}
                   id={`nav-dropdown-${label.toLowerCase().replace(/ /g, '-')}`}
                   className={`${styles.dropdown} ${isScrolled ? styles['dropdown--scrolled'] : ''}`}
-                  onClick={(e) => {
-                    // prevent accidental propagation (helps mobile UX stability)
-                    e.stopPropagation();
-                  }}
                 >
                   {items.map((sub, j) => (
                     <NavDropdown.Item
