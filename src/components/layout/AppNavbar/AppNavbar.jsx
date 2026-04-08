@@ -7,14 +7,14 @@ import logo from '../../../assets/logo.png';
 import styles from './AppNavbar.module.scss';
 
 const NAV_LINKS = [
-  { to: '/',              label: 'Home',        end: true },
-  { to: '/about',         label: 'About'        },
-  { to: '/leadership',    label: 'EC Members'   },
-  { to: '/facilities',    label: 'Facilities'   },
-  { to: '/menu',          label: 'Menu'         },
-  { to: '/events',        label: 'Events'       },
-  { to: '/gallery',       label: 'Gallery'      },
-  { to: '/notice',        label: 'Notice'       },
+  { to: '/', label: 'Home', end: true },
+  { to: '/about', label: 'About' },
+  { to: '/leadership', label: 'EC Members' },
+  { to: '/facilities', label: 'Facilities' },
+  { to: '/menu', label: 'Menu' },
+  { to: '/events', label: 'Events' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/notice', label: 'Notice' },
 ];
 
 const AppNavbar = () => {
@@ -33,16 +33,16 @@ const AppNavbar = () => {
     >
       <Container fluid className={styles.navContainer}>
         {/* Brand / Logo - Left Side */}
-        <Navbar.Brand 
-          as={Link} 
-          to="/" 
-          className={styles.brand} 
+        <Navbar.Brand
+          as={Link}
+          to="/"
+          className={styles.brand}
           onClick={() => setExpanded(false)}
         >
           <div className={styles.brandLogo}>
-            <img 
-              src={logo} 
-              alt={`${config.site.name} Logo`} 
+            <img
+              src={logo}
+              alt={`${config.site.name} Logo`}
               className={styles.logoImg}
             />
           </div>
@@ -58,36 +58,34 @@ const AppNavbar = () => {
           <span className={`${styles.toggleBar} ${expanded ? styles['toggleBar--open'] : ''}`} />
         </Navbar.Toggle>
 
-        {/* Nav Links - Centered */}
+        {/* Nav Links - Right Side */}
         <Navbar.Collapse id="main-nav" className={styles.navCollapse}>
-          <div className={styles.navCenterWrapper}>
-            <Nav className={styles.navLinks}>
-              {NAV_LINKS.map(({ to, label, end }) => (
-                <Nav.Item key={to}>
-                  <NavLink
-                    to={to}
-                    end={end}
-                    className={({ isActive }) =>
-                      `${styles.navLink} ${isActive ? styles['navLink--active'] : ''}`
-                    }
-                    onClick={() => setExpanded(false)}
-                  >
-                    {label}
-                  </NavLink>
-                </Nav.Item>
-              ))}
-            </Nav>
+          <Nav className={styles.navLinks}>
+            {NAV_LINKS.map(({ to, label, end }) => (
+              <Nav.Item key={to}>
+                <NavLink
+                  to={to}
+                  end={end}
+                  className={({ isActive }) =>
+                    `${styles.navLink} ${isActive ? styles['navLink--active'] : ''} ${isScrolled ? styles['navLink--scrolled'] : ''}`
+                  }
+                  onClick={() => setExpanded(false)}
+                >
+                  {label}
+                </NavLink>
+              </Nav.Item>
+            ))}
+          </Nav>
 
-            {/* CTA Button */}
-            <div className={styles.ctaWrap}>
-              <Link
-                to="/reservation"
-                className={styles.ctaBtn}
-                onClick={() => setExpanded(false)}
-              >
-                Reservation
-              </Link>
-            </div>
+          {/* CTA Button */}
+          <div className={styles.ctaWrap}>
+            <Link
+              to="/reservation"
+              className={styles.ctaBtn}
+              onClick={() => setExpanded(false)}
+            >
+              Reservation
+            </Link>
           </div>
         </Navbar.Collapse>
       </Container>

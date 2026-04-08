@@ -24,6 +24,7 @@ const config = {
   social: {
     facebook: 'https://facebook.com/noakhaliclubdhaka',
     instagram: 'https://instagram.com/noakhaliclubdhaka',
+    linkedin: 'https://linkedin.com/company/noakhaliclubdhaka',
     twitter: 'https://twitter.com/noakhaliclubdhaka',
   },
 };

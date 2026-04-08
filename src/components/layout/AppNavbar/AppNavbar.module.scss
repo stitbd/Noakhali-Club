@@ -3,57 +3,59 @@
 
 .navbar {
   position: fixed !important;
-  top: 20px;
-  left: 50% !important;           // Add !important
-  right: auto !important;         // Important: override Bootstrap's right: 0
+  top: 30px !important;
+  left: 50% !important;
+  right: auto !important;
   transform: translateX(-50%);
   width: calc(100% - 40px);
   max-width: 1400px;
   z-index: 1040;
-  background: rgba($brand-black, 0.2) !important;
+  background: rgba($brand-white, 0.2) !important;
   backdrop-filter: blur(20px) saturate(1.8);
   -webkit-backdrop-filter: blur(20px) saturate(1.8);
   border: 1px solid rgba($brand-white, 0.1);
   border-radius: 50px;
-  padding: 0.75rem 2.5rem !important;
+  padding: 0.1rem 2.5rem !important;
   transition: all 0.4s ease;
   box-shadow: 0 4px 20px rgba($brand-black, 0.15);
 
   &--scrolled {
-    top: 10px;
-    background: rgba($brand-black, 0.9) !important;
+    top: 10px !important;
+    background: rgba($brand-white, 0.95) !important;
     border-color: rgba($brand-gold, 0.3);
-    box-shadow: 0 8px 32px rgba($brand-black, 0.5);
-    padding: 0.6rem 2.5rem !important;
+    box-shadow: 0 8px 32px rgba($brand-black, 0.15);
+    padding: 0.1rem 2.5rem !important;
   }
 
-@include mobile {
-    top: 10px;
+  @include mobile {
+    top: 10px !important;
     width: calc(100% - 20px);
     border-radius: 20px;
-    padding: 0.6rem 1rem !important;
+    padding: 0.6rem 1.5rem !important;
+
+    &--scrolled {
+      padding: 0.5rem 1.5rem !important;
+    }
   }
 }
 
 .navContainer {
-  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 1rem !important;
+  justify-content: space-between;
+  padding: 0 !important;
   max-width: 100% !important;
+  width: 100%;
 }
 
-// Brand
+// Brand - Left Side
 .brand {
-  position: absolute;
-  left: 1rem;
   display: flex;
   align-items: center;
-  gap: $space-sm;
   text-decoration: none;
   z-index: 100;
   flex-shrink: 0;
+  margin-right: auto;
 
   &:hover {
     text-decoration: none;
@@ -61,7 +63,6 @@
 }
 
 .brandLogo {
-  width: 45px;
   height: 45px;
   display: flex;
   align-items: center;
@@ -69,57 +70,49 @@
   flex-shrink: 0;
 
   @include mobile {
-    width: 38px;
     height: 38px;
   }
 }
 
 .logoImg {
-  width: 100%;
   height: 100%;
+  width: auto;
   object-fit: contain;
 }
 
-// Nav Collapse - Full width
+// Nav Collapse - Right Side
 .navCollapse {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: flex-end;
   align-items: center;
-  width: 100%;
-  flex-wrap: wrap;
+  flex-grow: 0;
   
   @include tablet {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     background: rgba($brand-black, 0.98);
     border-radius: 16px;
-    margin-top: $space-md;
+    margin-top: $space-sm;
     padding: $space-lg;
     border: 1px solid rgba($brand-gold, 0.2);
-  }
-}
-
-// Center wrapper for nav items
-.navCenterWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  gap: 2rem;
-  flex-wrap: wrap;
-
-  @include tablet {
     flex-direction: column;
-    gap: $space-md;
+    
+    &:not(.show) {
+      display: none !important;
+    }
   }
 }
 
-// Nav Links
+// Nav Links - Right aligned
 .navLinks {
   display: flex !important;
   align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
+  justify-content: flex-end;
+  gap: 0.5rem;
   margin: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
   @include tablet {
     flex-direction: column;
@@ -134,7 +127,7 @@
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba($brand-white, 0.85) !important;
+  color: rgba($brand-white, 0.9) !important;
   padding: 0.5rem 0.9rem !important;
   border-radius: 8px;
   text-decoration: none;
@@ -172,14 +165,36 @@
     }
   }
 
+  // Scrolled state - black text
+  &--scrolled {
+    color: rgba($brand-black, 0.85) !important;
+
+    &:hover {
+      color: $brand-gold !important;
+    }
+
+    &.navLink--active {
+      color: $brand-gold !important;
+    }
+  }
+
   @include tablet {
     display: block;
     width: 100%;
     padding: 0.75rem 1.25rem !important;
     text-align: center;
+    color: rgba($brand-white, 0.9) !important;
     
     &::after {
       display: none;
+    }
+
+    &--scrolled {
+      color: rgba($brand-white, 0.9) !important;
+
+      &:hover {
+        color: $brand-gold !important;
+      }
     }
   }
 
@@ -192,11 +207,11 @@
 // CTA Button
 .ctaWrap {
   flex-shrink: 0;
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 
   @include tablet {
     margin-left: 0;
-    margin-top: $space-sm;
+    margin-top: $space-md;
     width: 100%;
   }
 }
@@ -227,6 +242,7 @@
   @include tablet {
     width: 100%;
     text-align: center;
+    display: block;
   }
 
   @include mobile {
@@ -235,25 +251,28 @@
   }
 }
 
-// Mobile Toggle
+// Mobile Toggle - Right Side
 .toggle {
-  position: absolute;
-  right: 1rem;
   border: 1px solid rgba($brand-gold, 0.4) !important;
   padding: 6px 10px !important;
   background: rgba($brand-black, 0.3) !important;
   border-radius: 8px !important;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 5px;
   align-items: center;
   justify-content: center;
   z-index: 100;
   flex-shrink: 0;
+  margin-left: auto;
 
   &:focus {
     box-shadow: none !important;
     outline: none;
+  }
+
+  @include tablet {
+    display: flex;
   }
 }
 
@@ -280,30 +299,28 @@
   }
 }
 
+// Scrolled toggle styles
+.navbar--scrolled {
+  .toggle {
+    background: rgba($brand-white, 0.3) !important;
+    border-color: rgba($brand-gold, 0.5) !important;
+  }
+}
+
 // Responsive adjustments
 @media (max-width: 1200px) {
   .navLink {
     font-size: 0.68rem;
-    padding: 0.5rem 0.75rem !important;
+    padding: 0.5rem 0.7rem !important;
+  }
+  
+  .ctaWrap {
+    margin-left: 1rem;
   }
 }
 
 @media (max-width: 992px) {
   .navbar {
     padding: 0.7rem 1.5rem !important;
-  }
-}
-
-@include mobile {
-  .navbar {
-    padding: 0.6rem 1rem !important;
-    
-    &--scrolled {
-      padding: 0.5rem 1rem !important;
-    }
-  }
-  
-  .navCenterWrapper {
-    gap: $space-md;
   }
 }

@@ -58,6 +58,12 @@ html, body {
 }
 *, *::before, *::after { box-sizing: border-box; }
 
+._main_1d82x_12 {
+    flex: 1;
+    width: 100%;
+    padding-top: 0 !important;
+}
+
 #root {
   width: 1126px;
   max-width: 100%;

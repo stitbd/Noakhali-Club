@@ -72,7 +72,7 @@
 }
 
 .brandDesc {
-  font-size: $fs-sm;
+  font-size: $fs-sm;                            
   color: $text-muted;
   line-height: 1.75;
   margin-bottom: $space-lg;
@@ -87,7 +87,7 @@
 .socialLink {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
+  border-radius: 15%;
   border: 1px solid $border-subtle;
   @include flex-center;
   color: $text-muted;
