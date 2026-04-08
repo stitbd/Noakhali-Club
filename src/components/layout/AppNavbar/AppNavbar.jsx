@@ -1,20 +1,44 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import useScrollPosition from '../../../hooks/useScrollPosition';
 import config from '../../../utils/config';
 import logo from '../../../assets/logo.png';
 import styles from './AppNavbar.module.scss';
 
-const NAV_LINKS = [
-  { to: '/', label: 'Home', end: true },
-  { to: '/about', label: 'About' },
-  { to: '/leadership', label: 'EC Members' },
-  { to: '/facilities', label: 'Facilities' },
-  { to: '/menu', label: 'Menu' },
-  { to: '/events', label: 'Events' },
-  { to: '/gallery', label: 'Gallery' },
-  { to: '/notice', label: 'Notice' },
+// Nav items definition (now can include dropdowns)
+const NAV_ITEMS = [
+  { type: 'link', to: '/', label: 'Home', end: true },
+  {
+    type: 'dropdown',
+    label: 'About',
+    items: [
+      { to: '/about/history', label: 'History' },
+      { to: '/about/speech', label: 'President Speech' }
+    ]
+  },
+  {
+    type: 'dropdown',
+    label: 'Members',
+    items: [
+      { to: '/membersList', label: 'Member’s List' },
+      { to: '/leadership', label: 'EC Member' },
+      { to: '/members/life', label: 'Life Member' },
+      { to: '/members/donor', label: 'Donor Member' },
+      { to: '/members/permanent', label: 'Permanent Member' },
+      { to: '/members/corporate', label: 'Corporate Member' },
+      { to: '/members/foreign', label: 'Foreign Member' },
+      { to: '/members/honorary', label: 'Honorary Member' },
+      { to: '/members/use-club', label: 'Use club Member' },
+      { to: '/members/associate', label: 'Associate Member' },
+      { to: '/members/diplomate', label: 'Diplomate Member' },
+    ]
+  },
+  { type: 'link', to: '/facilities', label: 'Facilities' },
+  { type: 'link', to: '/menu', label: 'Menu' },
+  { type: 'link', to: '/events', label: 'Events' },
+  { type: 'link', to: '/gallery', label: 'Gallery' },
+  { type: 'link', to: '/notice', label: 'Notice' },
 ];
 
 const AppNavbar = () => {
@@ -61,20 +85,52 @@ const AppNavbar = () => {
         {/* Nav Links - Right Side */}
         <Navbar.Collapse id="main-nav" className={styles.navCollapse}>
           <Nav className={styles.navLinks}>
-            {NAV_LINKS.map(({ to, label, end }) => (
-              <Nav.Item key={to}>
-                <NavLink
-                  to={to}
-                  end={end}
-                  className={({ isActive }) =>
-                    `${styles.navLink} ${isActive ? styles['navLink--active'] : ''} ${isScrolled ? styles['navLink--scrolled'] : ''}`
-                  }
-                  onClick={() => setExpanded(false)}
+            {NAV_ITEMS.map((navItem, i) => {
+              if (navItem.type === 'link') {
+                const { to, label, end } = navItem;
+                return (
+                  <Nav.Item key={to}>
+                    <NavLink
+                      to={to}
+                      end={end}
+                      className={({ isActive }) =>
+                        `${styles.navLink} ${isActive ? styles['navLink--active'] : ''} ${isScrolled ? styles['navLink--scrolled'] : ''}`
+                      }
+                      onClick={() => setExpanded(false)}
+                    >
+                      {label}
+                    </NavLink>
+                  </Nav.Item>
+                );
+              }
+
+              // dropdown item
+              const { label, items } = navItem;
+              return (
+                <NavDropdown
+                  key={`dropdown-${i}`}
+                  title={label}
+                  id={`nav-dropdown-${label.toLowerCase().replace(/ /g, '-')}`}
+                  className={`${styles.dropdown} ${isScrolled ? styles['dropdown--scrolled'] : ''}`}
+                  onClick={(e) => {
+                    // prevent accidental propagation (helps mobile UX stability)
+                    e.stopPropagation();
+                  }}
                 >
-                  {label}
-                </NavLink>
-              </Nav.Item>
-            ))}
+                  {items.map((sub, j) => (
+                    <NavDropdown.Item
+                      key={j}
+                      as={Link}
+                      to={sub.to}
+                      className={styles.dropdownItem}
+                      onClick={() => setExpanded(false)}
+                    >
+                      {sub.label}
+                    </NavDropdown.Item>
+                  ))}
+                </NavDropdown>
+              );
+            })}
           </Nav>
 
           {/* CTA Button */}

@@ -10,7 +10,7 @@
   width: calc(100% - 40px);
   max-width: 1400px;
   z-index: 1040;
-  background: rgba($brand-white, 0.2) !important;
+  background: rgba($brand-black, 0.2) !important;
   backdrop-filter: blur(20px) saturate(1.8);
   -webkit-backdrop-filter: blur(20px) saturate(1.8);
   border: 1px solid rgba($brand-white, 0.1);
@@ -86,7 +86,7 @@
   justify-content: flex-end;
   align-items: center;
   flex-grow: 0;
-  
+
   @include tablet {
     position: absolute;
     top: 100%;
@@ -98,7 +98,7 @@
     padding: $space-lg;
     border: 1px solid rgba($brand-gold, 0.2);
     flex-direction: column;
-    
+
     &:not(.show) {
       display: none !important;
     }
@@ -150,7 +150,7 @@
   &:hover {
     color: $brand-gold !important;
     background: rgba($brand-gold, 0.08);
-    
+
     &::after {
       transform: translateX(-50%) scaleX(1);
     }
@@ -159,7 +159,7 @@
   &--active {
     color: $brand-gold !important;
     background: rgba($brand-gold, 0.12);
-    
+
     &::after {
       transform: translateX(-50%) scaleX(1);
     }
@@ -184,7 +184,7 @@
     padding: 0.75rem 1.25rem !important;
     text-align: center;
     color: rgba($brand-white, 0.9) !important;
-    
+
     &::after {
       display: none;
     }
@@ -307,13 +307,112 @@
   }
 }
 
+// ============ Dropdown styles (new) ============
+.dropdown {
+  :global(.nav-link) {
+    font-family: $font-body;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba($brand-white, 0.9) !important;
+    padding: 0.5rem 0.9rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus {
+      color: $brand-gold !important;
+      background: rgba($brand-gold, 0.08);
+    }
+
+    &.show {
+      color: $brand-gold !important;
+      background: rgba($brand-gold, 0.12);
+    }
+  }
+
+  // Scrolled state — dropdown triggers should turn black like links
+  &--scrolled :global(.nav-link) {
+    color: rgba($brand-black, 0.85) !important;
+
+    &:hover,
+    &:focus,
+    &.show {
+      color: $brand-gold !important;
+    }
+  }
+
+  @include tablet {
+    width: 100%;
+    :global(.nav-link) {
+      width: 100%;
+      text-align: center;
+      color: rgba($brand-white, 0.9) !important;
+
+      &.show {
+        background: rgba($brand-gold, 0.1) !important;
+      }
+    }
+    &--scrolled :global(.nav-link) {
+      color: rgba($brand-white, 0.9) !important;
+    }
+  }
+}
+
+:global(.dropdown-menu) {
+  background: $brand-black;
+  border: 1px solid rgba($brand-gold, 0.2);
+  border-radius: 14px;
+  padding: $space-sm;
+  min-width: 240px;
+  margin-top: 8px;
+  box-shadow: 0 20px 40px rgba($brand-black, 0.6);
+
+  @include tablet {
+    position: static !important;
+    width: 100%;
+    margin: 6px 0 12px 0 !important;
+    background: rgba($brand-black, 0.92);
+  }
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  font-family: $font-body;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba($brand-black, 0.85) !important;
+  border-radius: 10px;
+  padding: 0.6remrem !important;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: rgba($brand-gold, 0.1) !important;
+    color: $brand-gold !important;
+    transform: translateX(4px);
+  }
+
+  @include tablet {
+    text-align: center;
+    &:hover {
+      transform: none;
+      background: rgba($brand-gold, 0.12) !important;
+    }
+  }
+}
+
 // Responsive adjustments
 @media (max-width: 1200px) {
-  .navLink {
+  .navLink,
+  .dropdown :global(.nav-link) {
     font-size: 0.68rem;
     padding: 0.5rem 0.7rem !important;
   }
-  
   .ctaWrap {
     margin-left: 1rem;
   }
