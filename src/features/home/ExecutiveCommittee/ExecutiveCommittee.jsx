@@ -5,43 +5,42 @@ import { getInitials } from '../../../utils/helpers';
 import styles from './ExecutiveCommittee.module.scss';
 
 import imgPresident from '../../../assets/committee/president.jpg';
-import img01 from '../../../assets/committee/01.jpg';
-import img02 from '../../../assets/committee/02.jpg';
-import img03 from '../../../assets/committee/03.jpg';
-import img04 from '../../../assets/committee/04.jpg';
-import img05 from '../../../assets/committee/05.jpg';
-import img06 from '../../../assets/committee/06.jpg';
-import img07 from '../../../assets/committee/07.jpg';
-import img08 from '../../../assets/committee/08.jpg';
-import img09 from '../../../assets/committee/09.jpg';
-import img10 from '../../../assets/committee/10.jpg';
-import img11 from '../../../assets/committee/11.jpg';
-import img12 from '../../../assets/committee/12.jpg';
-import img13 from '../../../assets/committee/13.jpg';
-import img14 from '../../../assets/committee/14.jpg';
-import img15 from '../../../assets/committee/15.jpg';
-import img16 from '../../../assets/committee/16.jpg';
+import img01 from '../../../assets/committee/placeholder.jpg';
+import img02 from '../../../assets/committee/placeholder.jpg';
+import img03 from '../../../assets/committee/placeholder.jpg';
+import img04 from '../../../assets/committee/placeholder.jpg';
+import img05 from '../../../assets/committee/placeholder.jpg';
+import img06 from '../../../assets/committee/placeholder.jpg';
+import img07 from '../../../assets/committee/placeholder.jpg';
+import img08 from '../../../assets/committee/placeholder.jpg';
+import img09 from '../../../assets/committee/placeholder.jpg';
+import img10 from '../../../assets/committee/placeholder.jpg';
+import img11 from '../../../assets/committee/placeholder.jpg';
+import img12 from '../../../assets/committee/placeholder.jpg';
+import img13 from '../../../assets/committee/placeholder.jpg';
+import img14 from '../../../assets/committee/placeholder.jpg';
+import img15 from '../../../assets/committee/placeholder.jpg';
+import img16 from '../../../assets/committee/placeholder.jpg';
 import img17 from '../../../assets/committee/17.jpg';
 
 const COMMITTEE = [
-  { name: 'Mr. MD. Shahidul Ahsan', role: 'President', code: 'P-01', img: imgPresident },
-  { name: 'Mr. Mohd Ataur Rahman Bhuiyan', role: 'Vice-President', code: 'VP-01', img: img01 },
-  { name: 'Mr. Inamul Haq Khan', role: 'Vice-President', code: 'VP-02', img: img02 },
-  { name: 'Mr. Kabir Ahmed', role: 'Vice-President', code: 'VP-03', img: img03 },
-  { name: 'Mr. MD. Jamal Uddin', role: 'General Secretary', code: 'GS-01', img: img04 },
-  { name: 'Mr. Zafor Ahmed', role: 'Treasurer', code: 'TR-01', img: img05 },
-  { name: 'Mr. Abul Kalam Azad', role: 'Executive Member', code: 'EM-01', img: img06 },
-  { name: 'Mr. Khondoker Lutfor Rahman (Fatik)', role: 'Executive Member', code: 'EM-02', img: img07 },
-  { name: 'Mr. Abdullah Hil Rakib', role: 'Executive Member', code: 'EM-03', img: img08 },
-  { name: 'Mr. Mohammad Salim', role: 'Executive Member', code: 'EM-04', img: img09 },
-  { name: 'Mr. Ahmed Ullah', role: 'Executive Member', code: 'EM-05', img: img10 },
-  { name: 'Mr. MD. Kamal Uddin', role: 'Executive Member', code: 'EM-06', img: img11 },
-  { name: 'Mr. Sirajul Islam (Swapon)', role: 'Executive Member', code: 'EM-07', img: img12 },
-  { name: 'Md. Zakir Hossain Pervaz', role: 'Executive Member', code: 'EM-08', img: img13 },
-  { name: 'Dr. M Mokter Hossen', role: 'Executive Member', code: 'EM-09', img: img14 },
-  { name: 'Mohammed Shawkatullah Chowdhury', role: 'Executive Member', code: 'EM-10', img: img15 },
-  // { name: 'Mr. MD. Mahfuzur Rahman (Kiran)', role: 'Executive Member', code: 'EM-11', img: img16 },
-  // { name: 'Another Member', role: 'Executive Member', code: 'EM-12', img: img17 },
+  { name: 'Mr. Mohd. Ataur Rahman Bhuiyan (Manik)', role: 'President',         code: 'P-01',  img: imgPresident },
+  { name: 'Mr. Mohammed Abdul Hai',                  role: 'General Secretary', code: 'GS-01', img: img01 },
+  { name: 'Mr. Md. Kamal Uddin',                     role: 'Treasurer',         code: 'TR-01', img: img02 },
+  { name: 'Mr. Mohammed Shamsuddin Ahmed (Salim)',   role: 'Director',          code: 'D-01',  img: img03 },
+  { name: 'Mr. Md. Tafazzal Hossain Forhad',        role: 'Director',          code: 'D-02',  img: img04 },
+  { name: 'Barrister Imam Hossain Tareq',            role: 'Director',          code: 'D-03',  img: img05 },
+  { name: 'Mr. Abul Kalam Azad',                     role: 'Director',          code: 'D-04',  img: img06 },
+  { name: 'Mr. Azizur Rahman Kiran',                 role: 'Director',          code: 'D-05',  img: img07 },
+  { name: 'Mr. Mohammad Anwoar Hossain Monto',      role: 'Director',          code: 'D-06',  img: img08 },
+  { name: 'Mr. Md. Mahfuzur Rahman Kiron',           role: 'Director',          code: 'D-07',  img: img09 },
+  { name: 'Mr. Md. Salim Chowdhury',                 role: 'Director',          code: 'D-08',  img: img10 },
+  { name: 'Mr. Md. Monjurul Azim (Sumon)',           role: 'Director',          code: 'D-09',  img: img11 },
+  { name: 'Mr. Md. Zakir Hossain Parvez',            role: 'Director',          code: 'D-10',  img: img12 },
+  { name: 'Mr. Md. Salah Uddin',                     role: 'Director',          code: 'D-11',  img: img13 },
+  { name: 'Mr. Ahmed Ullah',                          role: 'Director',          code: 'D-12',  img: img14 },
+  { name: 'Mr. A.K.M. Ayub Ullah',                   role: 'Director',          code: 'D-13',  img: img15 },
+  { name: 'Mr. Fazla Azim (Sudan)',                   role: 'Director',          code: 'D-14',  img: img16 },
 ];
 
 const MemberCard = ({ member, index, cardRef }) => {
