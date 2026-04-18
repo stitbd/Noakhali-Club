@@ -328,9 +328,13 @@
     height: auto;
     display: flex;
     flex-direction: column;
-    padding: 150px 0 100px;
+    //padding: 150px 0 100px;
   }
 
+  .content {
+      padding-top: 50px;
+  }
+  
   .bgContainer {
     height: 60vh;
     min-height: 300px;

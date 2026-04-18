@@ -57,7 +57,12 @@
     height: 40%;
     z-index: 2;
     border-radius: $radius-md;
-  }
+    
+    @include mobile {
+      display: none;
+    }
+  } 
+
 }
 
 /* ── Badge: bottom-center overlapping both images ──────── */
@@ -79,10 +84,10 @@
   width: 62%;
 
   @include mobile {
-    bottom: 4%;
-    left: 2%;
+    bottom: 10%;
+    left: 15%;
     padding: $space-sm $space-md;
-    width: 90%;
+    width: 70%;
   }
 }
 
@@ -239,20 +244,24 @@
     display: block;
     color: $brand-gold;
   }
+  
+  @include mobile {
+    font-size: 36px;
+  }
 }
 
 /* ── Descriptions ─────────────────────────────────────── */
 .description {
   font-size: $fs-sm;
   line-height: 1.8;
-  color: $text-muted;
+  color: $brand-black;
   margin-bottom: $space-md;
 
   /* First paragraph gets a left gold border, like in the screenshot */
   &:first-of-type {
     border-left: 3px solid $brand-gold;
     padding-left: $space-md;
-    color: darken($text-muted, 6%);
+    color: #475569;
   }
 
   &:last-of-type {
