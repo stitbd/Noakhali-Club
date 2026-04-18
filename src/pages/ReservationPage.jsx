@@ -55,7 +55,7 @@ const INFO_ITEMS = [
   { icon: '📞', label: 'Phone', value: '+88 01713005821' },
   { icon: '✉',  label: 'Email', value: 'noakhlaiclubdhaka@yahoo.com' },
   { icon: '🕐', label: 'Hours', value: 'Mon–Fri 9AM–6PM, Sat 9AM–3PM' },
-  { icon: '📍', label: 'Location', value: 'Sattara Center, 30/A, Naya Paltan, V.I.P Road, Hotel Victory, Dhaka-1000' },
+  { icon: '📍', label: 'Location', value: 'Gaus-E-Pak Bhaban, 17th Floor, 28/G/1 Toyenbee Circular Road, Motijheel C/A, Dhaka-1000' },
 ];
 
 const ReservationPage = () => {

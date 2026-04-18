@@ -21,6 +21,7 @@ const NoticePage            = lazy(() => import('../pages/NoticePage'));
 // ── About dropdown routes ──────────────────────────────────────────
 const HistoryPage           = lazy(() => import('../pages/about/HistoryPage'));
 const PresidentSpeechPage   = lazy(() => import('../pages/about/PresidentSpeechPage'));
+const LegacyPage            = lazy(() => import('../pages/about/LegacyPage'));
 
 // ── Membership routes (Members dropdown) ────────────────────────
 const MemberListPage        = lazy(() => import('../pages/members/MemberListPage'));
@@ -61,6 +62,7 @@ const router = createBrowserRouter([
       // About routes (dropdown handled in navbar; define routes explicitly)
       { path: 'about/history', element: withSuspense(HistoryPage) },
       { path: 'about/speech', element: withSuspense(PresidentSpeechPage) },
+      { path: 'about/legacy', element: withSuspense(LegacyPage) },
 
       // EC Members routes (including Executive Committee)
       { path: 'membersList', element: withSuspense(MemberListPage) },

@@ -14,7 +14,7 @@ const config = {
     email: 'noakhlaiclubdhaka@yahoo.com',
     telephone: '+880-2-9337933, 9330963, 9353854',
     phone: '+88 01713005821, +88 01973005821',
-    address: 'Sattara Center, 30/A, Naya Paltan, (9th Floor), V.I.P Road, Hotel Victory, Dhaka-1000, Bangladesh',
+    address: 'Gaus-E-Pak Bhaban, 17th Floor, 28/G/1 Toyenbee Circular Road, Motijheel C/A, Dhaka-1000',
     foundedYear: 2017,
   },
   features: {

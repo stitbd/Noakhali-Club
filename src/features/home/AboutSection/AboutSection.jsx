@@ -82,7 +82,7 @@ const AboutSection = () => (
               relying on your active participation to help our journey continue to flourish.
             </p>
 
-            <Link to="/legacy" className={styles.legacyLink}>
+            <Link to="/about/legacy" className={styles.legacyLink}>
               Our Legacy
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />

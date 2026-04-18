@@ -246,10 +246,11 @@
   margin: 0;
 
   li {
-    font-size: $fs-xs;
-    color: $text-muted;
-    margin-bottom: $space-sm;
+    font-size: 0.60rem;
+    color: $text-light;
+    margin-bottom: 0.5rem;
     line-height: 1.6;
+    text-align: start;
     &::marker { color: $brand-gold; }
   }
 }
