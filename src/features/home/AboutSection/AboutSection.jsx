@@ -32,7 +32,7 @@ const AboutSection = () => (
             {/* Badge: bottom-left, overlapping both images */}
             <div className={styles.badge}>
               <div className={styles.badgeLeft}>
-                <span className={styles.badgeYear}>12 Years of</span>
+                <span className={styles.badgeYear}>10 Years of</span>
                 <span className={styles.badgeText}>Pure Legacy</span>
               </div>
 
