@@ -42,17 +42,15 @@ const COMMITTEE = [
   { name: 'Mr. Fazla Azim (Sudan)',                   role: 'Director',          code: 'D-14',  img: img16 },
 ];
 
-const MemberCard = ({ member, index, cardRef }) => {
-  return (
-    <div
-      ref={(el) => {
-        cardRef.current[index] = el;
-      }}
-      className={styles.card}
-    >
+const MemberCard = ({ member, index, cardRef }) => (
+  <div
+    ref={(el) => { cardRef.current[index] = el; }}
+    className={styles.cardWrapper}
+  >
+    {/* ── Dark card shell (clips photo & overlay) ── */}
+    <div className={styles.card}>
+      {/* Photo fills entire card */}
       <div className={styles.photoArea}>
-        <span className={styles.codeBadge}>{member.code}</span>
-
         {member.img ? (
           <img src={member.img} alt={member.name} className={styles.photo} />
         ) : (
@@ -61,19 +59,23 @@ const MemberCard = ({ member, index, cardRef }) => {
           </div>
         )}
 
+        {/* Dark overlay: slides up from bottom on hover */}
         <div className={styles.photoOverlay} />
       </div>
-
-      <div className={styles.body}>
-        <h3 className={styles.name}>{member.name}</h3>
-        <div className={styles.roleLine} />
-        <p className={styles.role}>{member.role}</p>
-      </div>
-
-      <div className={styles.cornerAccent} />
     </div>
-  );
-};
+
+    {/* ── Info panel: half inside card, half hanging below ── */}
+    <div className={styles.infoPanel}>
+      <div className={styles.infoPanelTop}>
+        <span className={styles.codeBadge}>{member.code}</span>
+        <span className={styles.dotAccent} />
+      </div>
+      <h3 className={styles.name}>{member.name}</h3>
+      <div className={styles.divider} />
+      <p className={styles.role}>{member.role}</p>
+    </div>
+  </div>
+);
 
 const ExecutiveCommittee = () => {
   const cardRef = useRef([]);
@@ -87,7 +89,9 @@ const ExecutiveCommittee = () => {
       const obs = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setTimeout(() => el.classList.add(styles.visible), i * 65);
+            // Add visible class to the inner .card for entrance animation
+            const card = el.querySelector(`.${styles.card}`);
+            if (card) setTimeout(() => card.classList.add(styles.visible), i * 65);
             obs.unobserve(el);
           }
         },
@@ -101,8 +105,7 @@ const ExecutiveCommittee = () => {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  // President removed from display
-  const members = COMMITTEE.filter((member) => member.role !== 'President');
+  const members = COMMITTEE.filter((m) => m.role !== 'President');
 
   return (
     <section className={styles.section}>

@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { getInitials } from '../../utils/helpers';
 import styles from './MemberPage.module.scss';
 
+import imgPresident from '../../assets/committee/president.jpg';
 import img01 from '../../assets/committee/02.jpg';
 import img02 from '../../assets/committee/03.jpg';
 import img03 from '../../assets/committee/04.jpg';
@@ -20,8 +21,8 @@ import img14 from '../../assets/committee/15.jpg';
 import img15 from '../../assets/committee/16.jpg';
 import img16 from '../../assets/committee/17.jpg';
 
-
-const LIFE_MEMBER = [
+const COMMITTEE = [
+  { name: 'Mr. Mohd. Ataur Rahman Bhuiyan (Manik)', role: 'President',         code: 'P-01',  img: imgPresident },
   { name: 'Mr. Mohammed Abdul Hai',                  role: 'General Secretary', code: 'GS-01', img: img01 },
   { name: 'Mr. Md. Kamal Uddin',                     role: 'Treasurer',         code: 'TR-01', img: img02 },
   { name: 'Mr. Mohammed Shamsuddin Ahmed (Salim)',   role: 'Director',          code: 'D-01',  img: img03 },
@@ -40,16 +41,14 @@ const LIFE_MEMBER = [
   { name: 'Mr. Fazla Azim (Sudan)',                   role: 'Director',          code: 'D-14',  img: img16 },
 ];
 
-const MemberCard = ({ member, index, cardRef, featured = false }) => {
-  return (
-    <div
-      ref={(el) => {
-        if (cardRef && el) cardRef.current[index] = el;
-      }}
-      className={`${styles.card} ${featured ? styles['card--featured'] : ''}`}
-    >
+const MemberCard = ({ member, index, wrapperRef }) => (
+  <div
+    ref={(el) => { wrapperRef.current[index] = el; }}
+    className={styles.cardWrapper}
+  >
+    {/* ── Card: overflow hidden clips photo zoom & overlay ── */}
+    <div className={styles.card}>
       <div className={styles.photoArea}>
-
         {member.img ? (
           <img src={member.img} alt={member.name} className={styles.photo} />
         ) : (
@@ -57,71 +56,77 @@ const MemberCard = ({ member, index, cardRef, featured = false }) => {
             <span className={styles.initialsText}>{getInitials(member.name)}</span>
           </div>
         )}
-
+        {/* Overlay slides up from bottom on hover */}
         <div className={styles.photoOverlay} />
       </div>
-
-      <div className={styles.cardBody}>
-        <h3 className={styles.name}>{member.name}</h3>
-      </div>
-
-      <div className={styles.cornerAccent} />
     </div>
-  );
-};
+
+    {/* ── Info panel: half inside card, half hanging below ── */}
+    <div className={styles.infoPanel}>
+      <div className={styles.infoPanelTop}>
+      </div>
+      <h3 className={styles.name}>{member.name}</h3>
+      <div className={styles.divider} />
+    </div>
+  </div>
+);
 
 const AssociateMemberPage = () => {
-  const cardRef = useRef([]);
+  // ref array points to each cardWrapper element
+  const wrapperRef = useRef([]);
 
   useEffect(() => {
     const observers = [];
 
-    cardRef.current.forEach((el, i) => {
-      if (!el) return;
+    wrapperRef.current.forEach((wrapper, i) => {
+      if (!wrapper) return;
 
       const obs = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            // Stagger reveal on scroll: adds 65ms delay per card to feel premium
-            setTimeout(() => el.classList.add(styles.visible), i * 65);
-            obs.unobserve(el);
+            // Find the inner .card element and add .visible for entrance animation
+            const card = wrapper.querySelector(`.${styles.card}`);
+            if (card) {
+              setTimeout(() => card.classList.add(styles.visible), i * 65);
+            }
+            obs.unobserve(wrapper);
           }
         },
-        { threshold: 0.08 } // ~8% of the card must be visible before triggering
+        { threshold: 0.08 }
       );
 
-      obs.observe(el);
+      obs.observe(wrapper);
       observers.push(obs);
     });
 
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  // Optional: remove President from display in the grid
-  const members = LIFE_MEMBER.filter((m) => m.role !== 'President');
+  const members = COMMITTEE.filter((m) => m.role !== 'President');
 
   return (
-      <>
-        {/* ── Hero ──────────────────────────────────────────── */}
-        <div className={styles.hero}>
-          <div className={styles.heroBg} />
-          <Container className={styles.heroContent}>
-            <p className={styles.heroEyebrow}>Our Members</p>
-            <h1 className={styles.heroTitle}>Associate Members</h1>
-            <div className={styles.heroDivider} />
-            <p className={styles.heroDesc}>
-              Guiding Noakhali Club Dhaka Ltd with vision, integrity, and an unwavering commitment to our members.
-            </p>
-          </Container>
-        </div>
+    <>
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <div className={styles.hero}>
+        <div className={styles.heroBg} />
+        <Container className={styles.heroContent}>
+          <p className={styles.heroEyebrow}>Our Members</p>
+          <h1 className={styles.heroTitle}>Associate Members</h1>
+          <div className={styles.heroDivider} />
+          <p className={styles.heroDesc}>
+            Guiding Noakhali Club Dhaka Ltd with vision, integrity, and an unwavering commitment to our members.
+          </p>
+        </Container>
+      </div>
 
-      {/* ── Committee ──────────────────────────────────────── */}
-      <section className={styles.committeeSection}>
+      {/* ── Members Grid ─────────────────────────────────────────────────── */}
+      <section className={styles.section}>
         <Container>
+
           <Row className="g-4 justify-content-center">
             {members.map((member, index) => (
               <Col key={index} lg={4} md={6}>
-                <MemberCard member={member} index={index + 1} cardRef={cardRef} />
+                <MemberCard member={member} index={index} wrapperRef={wrapperRef} />
               </Col>
             ))}
           </Row>
