@@ -96,10 +96,10 @@ const LegacyPage = () => {
         <Container>
           <Row className="text-center g-4">
             {[
-              { value: '1,500+', label: 'Global Members' },
-              { value: '50+',    label: 'Luxury Boats' },
-              { value: '04+',    label: 'Premium Restaurants' },
-              { value: '12+',    label: 'Years Registry' },
+              { value: '1,200+', label: 'Global Members' },
+              { value: '30+',    label: 'Luxury Boats' },
+              { value: '02+',    label: 'Premium Restaurants' },
+              { value: '10+',    label: 'Years Registry' },
             ].map((stat) => (
               <Col key={stat.label} xs={6} md={3}>
                 <div className={styles.statValue}>{stat.value}</div>
