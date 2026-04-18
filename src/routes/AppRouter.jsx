@@ -23,6 +23,7 @@ const HistoryPage           = lazy(() => import('../pages/about/HistoryPage'));
 const PresidentSpeechPage   = lazy(() => import('../pages/about/PresidentSpeechPage'));
 
 // ── Membership routes (Members dropdown) ────────────────────────
+const MemberListPage        = lazy(() => import('../pages/members/MemberListPage'));
 const LeadershipPage        = lazy(() => import('../pages/members/LeadershipPage'));
 const DonorMemberPage       = lazy(() => import('../pages/members/DonorMemberPage'));
 const LifeMemberPage        = lazy(() => import('../pages/members/LifeMemberPage'));
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
       { path: 'about/speech', element: withSuspense(PresidentSpeechPage) },
 
       // EC Members routes (including Executive Committee)
+      { path: 'membersList', element: withSuspense(MemberListPage) },
       { path: 'leadership', element: withSuspense(LeadershipPage) },
       { path: 'members/donor', element: withSuspense(DonorMemberPage) },
       { path: 'members/life', element: withSuspense(LifeMemberPage) },
