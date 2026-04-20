@@ -3,6 +3,7 @@ $brand-gold:    #cf9a61;
 $brand-black:   #000000;
 $brand-red:     #FF0000;
 $brand-white:   #FFFFFF;
+$gold: $brand-gold;
 
 // ─── Extended Palette ───────────────────────────────────────
 $gold-light:    #e5b88d;
@@ -78,3 +79,28 @@ $z-sticky:    200;
 $z-overlay:   300;
 $z-modal:     400;
 $z-toast:     500;
+
+
+
+// Borders & Accents
+$card-border: rgba(212, 175, 55, 0.2);
+$gold-border: rgba($gold, 0.4);
+$gold-faint: rgba($gold, 0.12);
+
+// Backgrounds
+$navy-photo: linear-gradient(135deg, #1a1a2e, #0f1a33);
+// $surface-card: #0f1a33;
+// $surface-mid: #0a1428;
+
+// Text
+$text-light: rgba(255, 255, 255, 0.9);
+$text-muted: rgba(255, 255, 255, 0.65);
+
+// Spacing
+$space-lg: 2rem;
+$space-xl: 3rem;
+$space-2xl: 4rem;
+$space-3xl: 5rem;
+
+// Radius
+$radius-pill: 999px;
