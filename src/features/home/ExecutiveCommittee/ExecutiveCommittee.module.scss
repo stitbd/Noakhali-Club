@@ -220,3 +220,67 @@
   margin: 0;
   line-height: 1.65;
 }
+
+.containerFluid {
+  padding-left: 30px;
+  padding-right: 30px;
+  max-width: 100%;
+  
+  @include tablet {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+// Swiper Custom Styles
+.swiperContainer {
+  padding: 20px 0 60px !important;
+  
+  :global(.swiper-button-next),
+  :global(.swiper-button-prev) {
+    color: $brand-gold;
+    background: rgba(0, 0, 0, 0.5);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+    
+    &::after {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    
+    &:hover {
+      background: $brand-gold;
+      color: #1a1a2e;
+    }
+  }
+  
+  :global(.swiper-button-next) {
+    right: 10px;
+  }
+  
+  :global(.swiper-button-prev) {
+    left: 10px;
+  }
+  
+  :global(.swiper-pagination-bullet) {
+    background: $brand-gold;
+    opacity: 0.5;
+  }
+  
+  :global(.swiper-pagination-bullet-active) {
+    opacity: 1;
+    background: $brand-gold;
+  }
+  
+  :global(.swiper-pagination) {
+    bottom: 0;
+  }
+}
+
+.swiperSlide {
+  height: auto;
+  padding-bottom: 10px;
+}

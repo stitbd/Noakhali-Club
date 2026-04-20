@@ -1,8 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import SectionHeader from '../../../components/common/SectionHeader';
 import { getInitials } from '../../../utils/helpers';
 import styles from './ExecutiveCommittee.module.scss';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 
 import imgPresident from '../../../assets/committee/president.jpg';
 import img01 from '../../../assets/committee/02.jpg';
@@ -44,12 +52,10 @@ const COMMITTEE = [
 
 const MemberCard = ({ member, index, cardRef }) => (
   <div
-    ref={(el) => { cardRef.current[index] = el; }}
+    ref={(el) => { if (cardRef.current && el) cardRef.current[index] = el; }}
     className={styles.cardWrapper}
   >
-    {/* ── Dark card shell (clips photo & overlay) ── */}
     <div className={styles.card}>
-      {/* Photo fills entire card */}
       <div className={styles.photoArea}>
         {member.img ? (
           <img src={member.img} alt={member.name} className={styles.photo} />
@@ -58,13 +64,10 @@ const MemberCard = ({ member, index, cardRef }) => (
             <span className={styles.initialsText}>{getInitials(member.name)}</span>
           </div>
         )}
-
-        {/* Dark overlay: slides up from bottom on hover */}
         <div className={styles.photoOverlay} />
       </div>
     </div>
 
-    {/* ── Info panel: half inside card, half hanging below ── */}
     <div className={styles.infoPanel}>
       <div className={styles.infoPanelTop}>
         <span className={styles.codeBadge}>{member.code}</span>
@@ -79,6 +82,7 @@ const MemberCard = ({ member, index, cardRef }) => (
 
 const ExecutiveCommittee = () => {
   const cardRef = useRef([]);
+  const members = COMMITTEE.filter((m) => m.role !== 'President');
 
   useEffect(() => {
     const observers = [];
@@ -89,7 +93,6 @@ const ExecutiveCommittee = () => {
       const obs = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            // Add visible class to the inner .card for entrance animation
             const card = el.querySelector(`.${styles.card}`);
             if (card) setTimeout(() => card.classList.add(styles.visible), i * 65);
             obs.unobserve(el);
@@ -105,11 +108,9 @@ const ExecutiveCommittee = () => {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  const members = COMMITTEE.filter((m) => m.role !== 'President');
-
   return (
     <section className={styles.section}>
-      <Container>
+      <Container fluid className={styles.containerFluid}>
         <SectionHeader
           subtitle="2024 – 2026 Term"
           titlePart1="Executive Committee"
@@ -118,13 +119,41 @@ const ExecutiveCommittee = () => {
           variant="dark"
         />
 
-        <Row className="g-4 justify-content-center">
+        <Swiper
+          modules={[Autoplay, Navigation, Pagination]}
+          spaceBetween={24}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+            reverseDirection: false, // Right to left
+          }}
+          speed={1000}
+          loop={true}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 24,
+            },
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 24,
+            },
+          }}
+          className={styles.swiperContainer}
+        >
           {members.map((member, index) => (
-            <Col key={index} lg={4} md={6}>
+            <SwiperSlide key={index} className={styles.swiperSlide}>
               <MemberCard member={member} index={index} cardRef={cardRef} />
-            </Col>
+            </SwiperSlide>
           ))}
-        </Row>
+        </Swiper>
       </Container>
     </section>
   );
