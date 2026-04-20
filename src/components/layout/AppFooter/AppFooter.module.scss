@@ -36,10 +36,10 @@
   overflow: hidden;
   transition: border-color $transition-base;
 
-  &:hover {
-    border-color: $brand-gold;
-    box-shadow: 0 0 12px rgba($brand-gold, 0.3);
-  }
+  // &:hover {
+  //   border-color: $brand-gold;
+  //   box-shadow: 0 0 12px rgba($brand-gold, 0.3);
+  // }
 }
 
 // ✅ Updated: Logo image styles for transparent background
