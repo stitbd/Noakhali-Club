@@ -12,6 +12,7 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 const HomePage              = lazy(() => import('../pages/HomePage'));
 const FacilitiesPage        = lazy(() => import('../pages/FacilitiesPage'));
 const GalleryPage           = lazy(() => import('../pages/GalleryPage'));
+const VideoGalleryPage           = lazy(() => import('../pages/VideoGalleryPage'));
 const ReservationPage       = lazy(() => import('../pages/ReservationPage'));
 const NotFoundPage          = lazy(() => import('../pages/NotFoundPage'));
 const EventsPage            = lazy(() => import('../pages/EventsPage'));
@@ -82,6 +83,7 @@ const router = createBrowserRouter([
       { path: 'menu', element: withSuspense(MenuPage) },
       { path: 'events', element: withSuspense(EventsPage) },
       { path: 'gallery', element: withSuspense(GalleryPage) },
+      { path: 'video', element: withSuspense(VideoGalleryPage) },
       { path: 'notice', element: withSuspense(NoticePage) },
       { path: 'reservation', element: withSuspense(ReservationPage) },
 

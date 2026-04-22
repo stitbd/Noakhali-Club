@@ -37,15 +37,33 @@ const NAV_ITEMS = [
   { type: 'link', to: '/facilities', label: 'Facilities' },
   { type: 'link', to: '/menu', label: 'Menu' },
   { type: 'link', to: '/events', label: 'Events' },
-  { type: 'link', to: '/gallery', label: 'Gallery' },
+  {
+    type: 'dropdown',
+    label: 'Gallery',
+    items: [
+      { to: '/gallery', label: 'Photo Gallery' },
+      { to: '/video', label: 'Video Gallery' }
+    ]
+  },
   { type: 'link', to: '/notice', label: 'Notice' },
 ];
 
 const AppNavbar = () => {
   const scrollY = useScrollPosition();
   const [expanded, setExpanded] = useState(false);
+  const [hoveredDropdown, setHoveredDropdown] = useState(null);
 
   const isScrolled = scrollY > 60;
+
+  const handleMouseEnter = (index) => {
+    if (!expanded) {
+      setHoveredDropdown(index);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredDropdown(null);
+  };
 
   return (
     <Navbar
@@ -102,25 +120,34 @@ const AppNavbar = () => {
 
               // dropdown item
               const { label, items } = navItem;
+              const showDropdown = hoveredDropdown === i && !expanded;
+              
               return (
-                <NavDropdown
+                <div
                   key={`dropdown-${i}`}
-                  title={label}
-                  id={`nav-dropdown-${label.toLowerCase().replace(/ /g, '-')}`}
-                  className={`${styles.dropdown} ${isScrolled ? styles['dropdown--scrolled'] : ''}`}
+                  className={`${styles.dropdownWrapper} ${expanded ? styles['dropdownWrapper--mobile'] : ''}`}
+                  onMouseEnter={() => handleMouseEnter(i)}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  {items.map((sub, j) => (
-                    <NavDropdown.Item
-                      key={j}
-                      as={Link}
-                      to={sub.to}
-                      className={styles.dropdownItem}
-                      onClick={() => setExpanded(false)}
-                    >
-                      {sub.label}
-                    </NavDropdown.Item>
-                  ))}
-                </NavDropdown>
+                  <NavDropdown
+                    title={label}
+                    id={`nav-dropdown-${label.toLowerCase().replace(/ /g, '-')}`}
+                    show={showDropdown}
+                    className={`${styles.dropdown} ${isScrolled ? styles['dropdown--scrolled'] : ''}`}
+                  >
+                    {items.map((sub, j) => (
+                      <NavDropdown.Item
+                        key={j}
+                        as={Link}
+                        to={sub.to}
+                        className={styles.dropdownItem}
+                        onClick={() => setExpanded(false)}
+                      >
+                        {sub.label}
+                      </NavDropdown.Item>
+                    ))}
+                  </NavDropdown>
+                </div>
               );
             })}
           </Nav>

@@ -207,4 +207,4 @@ const LeadershipPage = () => {
   );
 };
 
-export default LeadershipPage;
+export default LeadershipPage; 

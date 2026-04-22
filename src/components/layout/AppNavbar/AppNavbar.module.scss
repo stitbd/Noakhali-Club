@@ -380,6 +380,48 @@
   }
 }
 
+.dropdownWrapper {
+  position: relative;
+  
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.dropdownWrapper--mobile {
+  width: 100%;
+}
+
+// Override default Bootstrap dropdown behavior for hover
+:global(.dropdown) {
+  &:hover {
+    :global(.dropdown-menu) {
+      display: block;
+    }
+  }
+}
+
+// Ensure dropdown stays visible when hovering over menu items
+:global(.dropdown-menu) {
+  display: none;
+  pointer-events: auto;
+}
+
+.dropdownWrapper:hover :global(.dropdown-menu) {
+  display: block;
+}
+
+// Mobile styles - revert to click behavior on mobile
+@media (max-width: 992px) {
+  .dropdownWrapper:hover :global(.dropdown-menu) {
+    display: none;
+  }
+  
+  :global(.dropdown.show) :global(.dropdown-menu) {
+    display: block;
+  }
+}
+
 // Ensure collapse shows on mobile
 @media (max-width: 992px) {
   .navbar-collapse {

@@ -44,38 +44,6 @@ const AppFooter = () => {
                   Bangladesh's premier nautical social club — offering world-class luxury facilities, and exclusive networking.
                 </p>
 
-                {/* ── Social Icons ──────────────────────── */}
-                <div className={styles.social}>
-                  <a href={config.social.facebook} target="_blank" rel="noopener noreferrer"
-                     className={styles.socialLink} aria-label="Facebook">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                    </svg>
-                  </a>
-                  <a href={config.social.instagram} target="_blank" rel="noopener noreferrer"
-                     className={styles.socialLink} aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-                         width="18" height="18">
-                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                      <circle cx="12" cy="12" r="4"/>
-                      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-                    </svg>
-                  </a>
-                  <a href={config.social.linkedin} target="_blank" rel="noopener noreferrer"
-                     className={styles.socialLink} aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                      <rect x="2" y="9" width="4" height="12"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                  </a>
-                  <a href={config.social.twitter} target="_blank" rel="noopener noreferrer"
-                     className={styles.socialLink} aria-label="Twitter / X">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                  </a>
-                </div>
               </div>
             </Col>
 
@@ -142,11 +110,41 @@ const AppFooter = () => {
 
         {/* ── Bottom Bar ───────────────────────────────────── */}
         <div className={styles.bottom}>
+          {/* ── Social Icons ──────────────────────── */}
+          <div className={styles.social}>
+            <a href={config.social.facebook} target="_blank" rel="noopener noreferrer"
+                className={styles.socialLink} aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href={config.social.instagram} target="_blank" rel="noopener noreferrer"
+                className={styles.socialLink} aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                    width="18" height="18">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+              </svg>
+            </a>
+            <a href={config.social.linkedin} target="_blank" rel="noopener noreferrer"
+                className={styles.socialLink} aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+            <a href={config.social.twitter} target="_blank" rel="noopener noreferrer"
+                className={styles.socialLink} aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </div>
           <p className={styles.copyright}>
-            © {year} {config.site.name}. All rights reserved.
-          </p>
-          <p className={styles.bottomRight}>
-            Crafted with excellence for our members
+            © 2017 Noakhali Club Dhaka Ltd | All rights reserved | Powered by  
+            <a href="https://stitbd.com/" className={styles.copyrightLink} target="_blank" rel="noopener noreferrer"> STITBD</a>
           </p>
         </div>
       </Container>
