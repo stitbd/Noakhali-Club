@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+// src/pages/NoticePage.jsx
+import React, { useState, useRef } from 'react';
 import { Container } from 'react-bootstrap';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import styles from './NoticePage.module.scss';
 
 const NOTICES = [
@@ -77,9 +79,49 @@ const NOTICES = [
   },
 ];
 
+// Animation variants
+const heroVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    }
+  }
+};
+
+const heroItemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+const noticeVariants = {
+  hidden: { opacity: 0, x: -20, scale: 0.98 },
+  visible: (custom) => ({
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      delay: custom * 0.06,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  })
+};
+
 const NoticePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const ref = useRef(null);
   const totalPages = 3;
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   const nonPinnedNotices = NOTICES.filter((n) => !n.pinned);
   const pinnedNotice = NOTICES.find((n) => n.pinned);
@@ -88,34 +130,95 @@ const NoticePage = () => {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────── */}
-      <div className={styles.hero}>
-        <div className={styles.heroBg} />
-        <div className={styles.heroPattern} />
+      <motion.div
+        className={styles.hero}
+        variants={heroVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div 
+          className={styles.heroBg}
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+        />
+        <motion.div 
+          className={styles.heroPattern}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+        />
         <Container className={styles.heroContent}>
-          <p className={styles.heroEyebrow}>Official Communication</p>
-          <h1 className={styles.heroTitle}>Notice Board</h1>
-          <div className={styles.heroDivider} />
-          <p className={styles.heroDesc}>
+          <motion.p 
+            className={styles.heroEyebrow}
+            variants={heroItemVariants}
+          >
+            Official Communication
+          </motion.p>
+          <motion.h1 
+            className={styles.heroTitle}
+            variants={heroItemVariants}
+          >
+            Notice Board
+          </motion.h1>
+          <motion.div 
+            className={styles.heroDivider}
+            variants={heroItemVariants}
+          />
+          <motion.p 
+            className={styles.heroDesc}
+            variants={heroItemVariants}
+          >
             Official announcements, circulars and updates for all club members
             and stakeholders.
-          </p>
+          </motion.p>
         </Container>
-      </div>
+      </motion.div>
 
-      <div className={styles.sectionDivider} />
+      <motion.div 
+        className={styles.sectionDivider}
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        style={{ transformOrigin: 'left' }}
+      />
 
       {/* ── Notice Section ───────────────────────────────── */}
-      <section className={styles.noticeSection}>
+      <motion.section 
+        ref={ref}
+        className={styles.noticeSection}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
         <Container>
-          <p className={styles.sectionLabel}>Announcements</p>
-          <h2 className={styles.sectionTitle}>Latest Notices</h2>
-          <p className={styles.sectionSubtitle}>
+          <motion.p 
+            className={styles.sectionLabel}
+            variants={heroItemVariants}
+          >
+            Announcements
+          </motion.p>
+          <motion.h2 
+            className={styles.sectionTitle}
+            variants={heroItemVariants}
+          >
+            Latest Notices
+          </motion.h2>
+          <motion.p 
+            className={styles.sectionSubtitle}
+            variants={heroItemVariants}
+          >
             All official communications from the Executive Committee. Members
             are requested to read all notices carefully and respond as required.
-          </p>
+          </motion.p>
 
           {/* Urgent Banner */}
-          <div className={styles.urgentBanner}>
+          <motion.div 
+            className={styles.urgentBanner}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            whileHover={{ scale: 1.01 }}
+          >
             <div className={styles.urgentIcon}>⚠</div>
             <div>
               <div className={styles.urgentTitle}>
@@ -128,85 +231,140 @@ const NoticePage = () => {
                 April 30. Contact the Secretary for details.
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Notice List */}
-          <div className={styles.noticeList}>
-            {/* Pinned Notice */}
-            {pinnedNotice && (
-              <div className={`${styles.noticeItem} ${styles.noticePinned}`}>
-                <span className={styles.pinIcon}>📌</span>
-                <div className={styles.noticeBody}>
-                  <div className={styles.noticeTags}>
-                    {pinnedNotice.tags.map((tag) => (
-                      <span key={tag.label} className={`${styles.tag} ${styles[`tag_${tag.type}`]}`}>
-                        {tag.label}
-                      </span>
-                    ))}
+          <AnimatePresence mode="wait">
+            <div className={styles.noticeList}>
+              {/* Pinned Notice */}
+              {pinnedNotice && (
+                <motion.div 
+                  className={`${styles.noticeItem} ${styles.noticePinned}`}
+                  variants={noticeVariants}
+                  custom={0}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={{ x: 5 }}
+                >
+                  <span className={styles.pinIcon}>📌</span>
+                  <div className={styles.noticeBody}>
+                    <div className={styles.noticeTags}>
+                      {pinnedNotice.tags.map((tag) => (
+                        <motion.span 
+                          key={tag.label} 
+                          className={`${styles.tag} ${styles[`tag_${tag.type}`]}`}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3, delay: 0.1 }}
+                        >
+                          {tag.label}
+                        </motion.span>
+                      ))}
+                    </div>
+                    <h3 className={styles.noticeTitle}>{pinnedNotice.title}</h3>
+                    <p className={styles.noticeExcerpt}>{pinnedNotice.excerpt}</p>
+                    <div className={styles.noticeMeta}>
+                      <span className={styles.noticeDate}>{pinnedNotice.date}</span>
+                      <motion.button 
+                        className={styles.readMore}
+                        whileHover={{ x: 5 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        Read Full →
+                      </motion.button>
+                    </div>
                   </div>
-                  <h3 className={styles.noticeTitle}>{pinnedNotice.title}</h3>
-                  <p className={styles.noticeExcerpt}>{pinnedNotice.excerpt}</p>
-                  <div className={styles.noticeMeta}>
-                    <span className={styles.noticeDate}>{pinnedNotice.date}</span>
-                    <button className={styles.readMore}>Read Full →</button>
-                  </div>
-                </div>
-              </div>
-            )}
+                </motion.div>
+              )}
 
-            {/* Serial Notices */}
-            {serialNotices.map((notice, idx) => (
-              <div key={notice.id} className={styles.noticeItem}>
-                <span className={styles.noticeNum}>
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <div className={styles.noticeBody}>
-                  <div className={styles.noticeTags}>
-                    {notice.tags.map((tag) => (
-                      <span key={tag.label} className={`${styles.tag} ${styles[`tag_${tag.type}`]}`}>
-                        {tag.label}
-                      </span>
-                    ))}
+              {/* Serial Notices */}
+              {serialNotices.map((notice, idx) => (
+                <motion.div 
+                  key={notice.id} 
+                  className={styles.noticeItem}
+                  variants={noticeVariants}
+                  custom={idx + 1}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={{ x: 5 }}
+                >
+                  <span className={styles.noticeNum}>
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
+                  <div className={styles.noticeBody}>
+                    <div className={styles.noticeTags}>
+                      {notice.tags.map((tag) => (
+                        <motion.span 
+                          key={tag.label} 
+                          className={`${styles.tag} ${styles[`tag_${tag.type}`]}`}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3, delay: idx * 0.06 + 0.1 }}
+                        >
+                          {tag.label}
+                        </motion.span>
+                      ))}
+                    </div>
+                    <h3 className={styles.noticeTitle}>{notice.title}</h3>
+                    <p className={styles.noticeExcerpt}>{notice.excerpt}</p>
+                    <div className={styles.noticeMeta}>
+                      <span className={styles.noticeDate}>{notice.date}</span>
+                      <motion.button 
+                        className={styles.readMore}
+                        whileHover={{ x: 5 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        Read Full →
+                      </motion.button>
+                    </div>
                   </div>
-                  <h3 className={styles.noticeTitle}>{notice.title}</h3>
-                  <p className={styles.noticeExcerpt}>{notice.excerpt}</p>
-                  <div className={styles.noticeMeta}>
-                    <span className={styles.noticeDate}>{notice.date}</span>
-                    <button className={styles.readMore}>Read Full →</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          </AnimatePresence>
 
           {/* Pagination */}
-          <div className={styles.pagination}>
-            <button
+          <motion.div 
+            className={styles.pagination}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            <motion.button
               className={styles.pgArrow}
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
               ‹
-            </button>
+            </motion.button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-              <button
+              <motion.button
                 key={p}
                 className={`${styles.pgBtn} ${currentPage === p ? styles.pgBtnActive : ''}`}
                 onClick={() => setCurrentPage(p)}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: p * 0.05 + 0.5 }}
               >
                 {p}
-              </button>
+              </motion.button>
             ))}
-            <button
+            <motion.button
               className={styles.pgArrow}
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
               ›
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </Container>
-      </section>
+      </motion.section>
     </>
   );
 };

@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+// src/components/layout/AppNavbar.jsx
+import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { motion, AnimatePresence } from 'framer-motion';
 import useScrollPosition from '../../../hooks/useScrollPosition';
 import config from '../../../utils/config';
 import logo from '../../../assets/logo.png';
 import styles from './AppNavbar.module.scss';
 
-// Nav items definition (now can include dropdowns)
 const NAV_ITEMS = [
   { type: 'link', to: '/', label: 'Home', end: true },
   {
@@ -48,12 +49,56 @@ const NAV_ITEMS = [
   { type: 'link', to: '/notice', label: 'Notice' },
 ];
 
+// Animation variants
+const navItemVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.05,
+      duration: 0.4,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  })
+};
+
+const dropdownVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: -10, 
+    scale: 0.95 
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: {
+      duration: 0.3,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    y: -10, 
+    scale: 0.95,
+    transition: {
+      duration: 0.2
+    }
+  }
+};
+
 const AppNavbar = () => {
   const scrollY = useScrollPosition();
   const [expanded, setExpanded] = useState(false);
   const [hoveredDropdown, setHoveredDropdown] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const isScrolled = scrollY > 60;
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   const handleMouseEnter = (index) => {
     if (!expanded) {
@@ -66,105 +111,216 @@ const AppNavbar = () => {
   };
 
   return (
-    <Navbar
-      expand="lg"
-      expanded={expanded}
-      onToggle={() => setExpanded(!expanded)}
-      className={`${styles.navbar} ${isScrolled ? styles['navbar--scrolled'] : ''}`}
-      fixed="top"
+    <motion.div
+      initial={{ opacity: 0, y: -30 }}
+      animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <Container fluid className={styles.navContainer}>
-        {/* Brand / Logo - Left Side */}
-        <Navbar.Brand
-          as={Link}
-          to="/"
-          className={styles.brand}
-          onClick={() => setExpanded(false)}
-        >
-          <div className={styles.brandLogo}>
-            <img
-              src={logo}
-              alt={`${config.site.name} Logo`}
-              className={styles.logoImg}
-            />
-          </div>
-        </Navbar.Brand>
-
-        {/* Mobile Toggle */}
-        <Navbar.Toggle 
-          aria-controls="main-nav" 
-          className={styles.toggle} 
-        />
-
-        {/* Nav Links - Right Side */}
-        <Navbar.Collapse id="main-nav" className={styles.navCollapse}>
-          <Nav className={styles.navLinks}>
-            {NAV_ITEMS.map((navItem, i) => {
-              if (navItem.type === 'link') {
-                const { to, label, end } = navItem;
-                return (
-                  <Nav.Item key={to}>
-                    <NavLink
-                      to={to}
-                      end={end}
-                      className={({ isActive }) =>
-                        `${styles.navLink} ${isActive ? styles['navLink--active'] : ''} ${isScrolled ? styles['navLink--scrolled'] : ''}`
-                      }
-                      onClick={() => setExpanded(false)}
-                    >
-                      {label}
-                    </NavLink>
-                  </Nav.Item>
-                );
-              }
-
-              // dropdown item
-              const { label, items } = navItem;
-              const showDropdown = hoveredDropdown === i && !expanded;
-              
-              return (
-                <div
-                  key={`dropdown-${i}`}
-                  className={`${styles.dropdownWrapper} ${expanded ? styles['dropdownWrapper--mobile'] : ''}`}
-                  onMouseEnter={() => handleMouseEnter(i)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <NavDropdown
-                    title={label}
-                    id={`nav-dropdown-${label.toLowerCase().replace(/ /g, '-')}`}
-                    show={showDropdown}
-                    className={`${styles.dropdown} ${isScrolled ? styles['dropdown--scrolled'] : ''}`}
-                  >
-                    {items.map((sub, j) => (
-                      <NavDropdown.Item
-                        key={j}
-                        as={Link}
-                        to={sub.to}
-                        className={styles.dropdownItem}
-                        onClick={() => setExpanded(false)}
-                      >
-                        {sub.label}
-                      </NavDropdown.Item>
-                    ))}
-                  </NavDropdown>
-                </div>
-              );
-            })}
-          </Nav>
-
-          {/* CTA Button */}
-          <div className={styles.ctaWrap}>
-            <Link
-              to="/reservation"
-              className={styles.ctaBtn}
-              onClick={() => setExpanded(false)}
+      <Navbar
+        expand="lg"
+        expanded={expanded}
+        onToggle={() => setExpanded(!expanded)}
+        className={`${styles.navbar} ${isScrolled ? styles['navbar--scrolled'] : ''}`}
+        fixed="top"
+      >
+        <Container fluid className={styles.navContainer}>
+          {/* Brand / Logo */}
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            className={styles.brand}
+            onClick={() => setExpanded(false)}
+          >
+            <motion.div 
+              className={styles.brandLogo}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             >
-              Reservation
-            </Link>
-          </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+              <img
+                src={logo}
+                alt={`${config.site.name} Logo`}
+                className={styles.logoImg}
+              />
+            </motion.div>
+          </Navbar.Brand>
+
+          {/* Mobile Toggle with Hamburger Animation */}
+          <Navbar.Toggle 
+            aria-controls="main-nav" 
+            className={styles.toggle}
+            onClick={() => setExpanded(!expanded)}
+          >
+            <motion.div
+              className={styles.hamburgerWrapper}
+              animate={expanded ? "open" : "closed"}
+            >
+              <motion.span
+                className={styles.hamburgerLine}
+                variants={{
+                  closed: { rotate: 0, y: 0 },
+                  open: { rotate: 45, y: 8 }
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.span
+                className={styles.hamburgerLine}
+                variants={{
+                  closed: { opacity: 1, x: 0 },
+                  open: { opacity: 0, x: -20 }
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.span
+                className={styles.hamburgerLine}
+                variants={{
+                  closed: { rotate: 0, y: 0 },
+                  open: { rotate: -45, y: -8 }
+                }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.div>
+          </Navbar.Toggle>
+
+          {/* Nav Links */}
+          <Navbar.Collapse id="main-nav" className={styles.navCollapse}>
+            <Nav className={styles.navLinks}>
+              {NAV_ITEMS.map((navItem, i) => {
+                if (navItem.type === 'link') {
+                  const { to, label, end } = navItem;
+                  return (
+                    <motion.div
+                      key={to}
+                      custom={i}
+                      variants={navItemVariants}
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      <Nav.Item>
+                        <NavLink
+                          to={to}
+                          end={end}
+                          className={({ isActive }) =>
+                            `${styles.navLink} ${isActive ? styles['navLink--active'] : ''} ${isScrolled ? styles['navLink--scrolled'] : ''}`
+                          }
+                          onClick={() => setExpanded(false)}
+                        >
+                          {({ isActive }) => (
+                            <>
+                              {label}
+                              {isActive && (
+                                <motion.span
+                                  className={styles.activeIndicator}
+                                  layoutId="activeIndicator"
+                                  transition={{ duration: 0.3 }}
+                                />
+                              )}
+                            </>
+                          )}
+                        </NavLink>
+                      </Nav.Item>
+                    </motion.div>
+                  );
+                }
+
+                // Dropdown item
+                const { label, items } = navItem;
+                const showDropdown = hoveredDropdown === i && !expanded;
+                
+                return (
+                  <motion.div
+                    key={`dropdown-${i}`}
+                    custom={i}
+                    variants={navItemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className={`${styles.dropdownWrapper} ${expanded ? styles['dropdownWrapper--mobile'] : ''}`}
+                    onMouseEnter={() => handleMouseEnter(i)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <NavDropdown
+                      title={label}
+                      id={`nav-dropdown-${label.toLowerCase().replace(/ /g, '-')}`}
+                      show={showDropdown}
+                      className={`${styles.dropdown} ${isScrolled ? styles['dropdown--scrolled'] : ''}`}
+                    >
+                      <AnimatePresence>
+                        {showDropdown && (
+                          <motion.div
+                            variants={dropdownVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className={styles.dropdownMenuWrapper}
+                          >
+                            {items.map((sub, j) => (
+                              <motion.div
+                                key={j}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ 
+                                  delay: j * 0.03,
+                                  duration: 0.3,
+                                  ease: [0.22, 1, 0.36, 1]
+                                }}
+                              >
+                                <NavDropdown.Item
+                                  as={Link}
+                                  to={sub.to}
+                                  className={styles.dropdownItem}
+                                  onClick={() => setExpanded(false)}
+                                >
+                                  {sub.label}
+                                </NavDropdown.Item>
+                              </motion.div>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </NavDropdown>
+                  </motion.div>
+                );
+              })}
+            </Nav>
+
+            {/* CTA Button */}
+            <motion.div
+              className={styles.ctaWrap}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ 
+                delay: NAV_ITEMS.length * 0.05,
+                duration: 0.4,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                to="/reservation"
+                className={styles.ctaBtn}
+                onClick={() => setExpanded(false)}
+              >
+                <motion.span
+                  initial={{ x: 0 }}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  Reservation
+                </motion.span>
+                <motion.span
+                  className={styles.ctaArrow}
+                  initial={{ x: 0 }}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  →
+                </motion.span>
+              </Link>
+            </motion.div>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </motion.div>
   );
 };
 

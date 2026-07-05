@@ -159,6 +159,7 @@
     }
   }
 
+  
   // Scrolled state - black text
   &--scrolled {
     color: rgba($brand-black, 0.85) !important;
@@ -446,4 +447,65 @@
   .navbar {
     padding: 0.7rem 1.5rem !important;
   }
+}
+
+
+.hamburgerWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 24px;
+  height: 20px;
+  justify-content: center;
+}
+
+.hamburgerLine {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: $brand-white;
+  border-radius: 2px;
+  transform-origin: center;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+  .navbar--scrolled & {
+    background: $brand-black;
+  }
+}
+
+.activeIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: $brand-gold;
+  border-radius: 2px;
+}
+
+.dropdownMenuWrapper {
+  background: $brand-black;
+  border: 1px solid rgba($brand-gold, 0.2);
+  border-radius: 14px;
+  padding: $space-sm;
+  min-width: 240px;
+  margin-top: 8px;
+  box-shadow: 0 20px 40px rgba($brand-black, 0.6);
+
+  @include tablet {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 6px 0 12px 0 !important;
+    position: static !important;
+    width: 100%;
+  }
+}
+
+.ctaArrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
 }

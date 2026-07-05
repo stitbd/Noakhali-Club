@@ -1,15 +1,13 @@
-/**
- * VideoGalleryPage — photo gallery with category filter and lightbox
- */
-
-import React, { useState } from 'react';
+// src/pages/VideoGalleryPage.jsx
+import React, { useState, useRef } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import AppModal from '../components/common/AppModal';
 import styles from './VideoGalleryPage.module.scss';
 
 const CATEGORIES = ['All', 'Events', 'Sports', 'Facilities', 'Members', 'Awards'];
 
-// Import all gallery images (Vite-compatible)
+// Import gallery images
 const galleryModules = import.meta.glob('../assets/gallery/*.{jpg,jpeg,png,webp}', {
   eager: true,
   import: 'default',
@@ -73,9 +71,48 @@ const GALLERY_ITEMS = [
   { id: 20, category: 'Awards', title: 'Community Service Award', image: galleryImages['03.jpg'], year: 2024 },
 ];
 
+// Animation variants
+const heroVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    }
+  }
+};
+
+const heroItemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.85 },
+  visible: (custom) => ({
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      delay: custom * 0.05,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  })
+};
+
 const VideoGalleryPage = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [lightboxItem, setLightboxItem] = useState(null);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   const filtered = activeCategory === 'All'
     ? GALLERY_ITEMS
@@ -84,73 +121,135 @@ const VideoGalleryPage = () => {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────── */}
-      <div className={styles.hero}>
-        <div className={styles.heroBg} />
+      <motion.div
+        className={styles.hero}
+        variants={heroVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div 
+          className={styles.heroBg}
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+        />
         <Container className={styles.heroContent}>
-          <p className={styles.heroEyebrow}>Our Moments</p>
-          <h1 className={styles.heroTitle}>Video Gallery</h1>
-          <div className={styles.heroDivider} />
-          <p className={styles.heroDesc}>
+          <motion.p 
+            className={styles.heroEyebrow}
+            variants={heroItemVariants}
+          >
+            Our Moments
+          </motion.p>
+          <motion.h1 
+            className={styles.heroTitle}
+            variants={heroItemVariants}
+          >
+            Video Gallery
+          </motion.h1>
+          <motion.div 
+            className={styles.heroDivider}
+            variants={heroItemVariants}
+          />
+          <motion.p 
+            className={styles.heroDesc}
+            variants={heroItemVariants}
+          >
             Relive the celebrations, championships, and cherished moments of club life.
-          </p>
+          </motion.p>
         </Container>
-      </div>
+      </motion.div>
 
       {/* ── Filter ────────────────────────────────────────── */}
       <section className={styles.filterSection}>
         <Container>
-          <div className={styles.filters}>
-            {CATEGORIES.map((cat) => (
-              <button
+          <motion.div 
+            className={styles.filters}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            {CATEGORIES.map((cat, index) => (
+              <motion.button
                 key={cat}
                 className={`${styles.filterBtn} ${activeCategory === cat ? styles['filterBtn--active'] : ''}`}
                 onClick={() => setActiveCategory(cat)}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.3, 
+                  delay: index * 0.05 + 0.4,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {cat}
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
         </Container>
       </section>
 
       {/* ── Gallery Grid ──────────────────────────────────── */}
-      <section className={styles.gallery}>
+      <motion.section 
+        ref={ref}
+        className={styles.gallery}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
         <Container>
-          <p className={styles.resultCount}>
+          <motion.p 
+            className={styles.resultCount}
+            variants={heroItemVariants}
+          >
             Showing <strong>{filtered.length}</strong> Video
             {activeCategory !== 'All' && ` in ${activeCategory}`}
-          </p>
+          </motion.p>
 
-          <Row className="g-3">
-            {filtered.map((item) => (
-              <Col key={item.id} lg={3} md={4} sm={6} xs={6}>
-                <div
-                  className={styles.item}
-                  onClick={() => setLightboxItem(item)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => e.key === 'Enter' && setLightboxItem(item)}
-                  aria-label={`View ${item.title}`}
-                >
-                  <div className={styles.itemBg}>
-                    <img 
-                      src={item.image} 
-                      alt={item.title}
-                      className={styles.itemImage}
-                    />
-                  </div>
-                  <div className={styles.itemOverlay}>
-                    <span className={styles.itemCategory}>{item.category}</span>
-                    <span className={styles.itemTitle}>{item.title}</span>
-                    <span className={styles.itemYear}>{item.year}</span>
-                    <span className={styles.itemZoom}>🔍</span>
-                  </div>
-                </div>
-              </Col>
-            ))}
-          </Row>
+          <AnimatePresence mode="wait">
+            <Row className="g-3">
+              {filtered.map((item, index) => (
+                <Col key={item.id} lg={3} md={4} sm={6} xs={6}>
+                  <motion.div
+                    custom={index}
+                    variants={itemVariants}
+                    whileHover={{ 
+                      y: -8,
+                      scale: 1.02,
+                      transition: { duration: 0.3 }
+                    }}
+                    className={styles.item}
+                    onClick={() => setLightboxItem(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setLightboxItem(item)}
+                    aria-label={`View ${item.title}`}
+                  >
+                    <div className={styles.itemBg}>
+                      <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className={styles.itemImage}
+                      />
+                    </div>
+                    <motion.div 
+                      className={styles.itemOverlay}
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <span className={styles.itemCategory}>{item.category}</span>
+                      <span className={styles.itemTitle}>{item.title}</span>
+                      <span className={styles.itemYear}>{item.year}</span>
+                      <span className={styles.itemZoom}>▶</span>
+                    </motion.div>
+                  </motion.div>
+                </Col>
+              ))}
+            </Row>
+          </AnimatePresence>
         </Container>
-      </section>
+      </motion.section>
 
       {/* ── Lightbox Modal ────────────────────────────────── */}
       <AppModal
@@ -160,7 +259,12 @@ const VideoGalleryPage = () => {
         size="lg"
       >
         {lightboxItem && (
-          <div className={styles.lightbox}>
+          <motion.div 
+            className={styles.lightbox}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className={styles.lightboxImg}>
               <img 
                 src={lightboxItem.image} 
@@ -173,7 +277,7 @@ const VideoGalleryPage = () => {
               <h3 className={styles.lightboxTitle}>{lightboxItem.title}</h3>
               <p className={styles.lightboxYear}>Year: {lightboxItem.year}</p>
             </div>
-          </div>
+          </motion.div>
         )}
       </AppModal>
     </>

@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
+// src/features/home/HeroSection/HeroSection.jsx
+import React, { useEffect, useState, useRef } from 'react';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
 import AppButton from '../../../components/common/AppButton';
+import useMouseParallax from '../../../hooks/useMouseParallax';
 import styles from './HeroSection.module.scss';
 
 import heroBg from '../../../assets/about-main.jpg';
@@ -38,10 +42,32 @@ const SLIDES = [
   },
 ];
 
+// Text split animation helper
+const splitText = (text) => {
+  return text.split(' ').map((word, i) => (
+    <motion.span
+      key={i}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.6,
+        delay: i * 0.08 + 0.4,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      style={{ display: 'inline-block', marginRight: '0.15em' }}
+    >
+      {word}
+    </motion.span>
+  ));
+};
+
 const HeroSection = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [loadedImages, setLoadedImages] = useState([]);
+  const heroRef = useRef(null);
+  const contentRef = useRef(null);
+  const mousePos = useMouseParallax(0.015);
 
   // Preload images
   useEffect(() => {
@@ -52,6 +78,28 @@ const HeroSection = () => {
       images.push(img);
     });
     setLoadedImages(images);
+  }, []);
+
+  // GSAP background parallax on scroll
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const handleScroll = () => {
+      const rect = hero.getBoundingClientRect();
+      const scrollPercent = 1 - (rect.bottom / window.innerHeight);
+      if (scrollPercent > 0 && scrollPercent < 1) {
+        gsap.to(hero.querySelector(`.${styles.bgContainer}`), {
+          scale: 1 + scrollPercent * 0.1,
+          y: scrollPercent * 50,
+          duration: 0.1,
+          ease: 'none',
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Auto-advance slides
@@ -67,12 +115,8 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll to next section
   const scrollToNextSection = () => {
-    // Try to find the about section by looking for common patterns
     let nextSection = document.querySelector('[class*="about"], [class*="About"]');
-
-    // If not found, try to find any section after hero
     if (!nextSection) {
       const allSections = document.querySelectorAll('section');
       const heroSection = document.querySelector('[class*="hero"], [class*="Hero"]');
@@ -84,17 +128,13 @@ const HeroSection = () => {
         }
       }
     }
-
-    // If still not found, scroll to a position below the hero
     if (!nextSection) {
       window.scrollTo({
-        top: window.innerHeight + 100, // Scroll past the hero section
+        top: window.innerHeight + 100,
         behavior: 'smooth'
       });
       return;
     }
-
-    // Scroll to the found section
     nextSection.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
@@ -104,42 +144,101 @@ const HeroSection = () => {
   const currentSlide = SLIDES[activeSlide];
 
   return (
-    <section className={styles.hero}>
-      {/* Background Slides */}
+    <section ref={heroRef} className={styles.hero}>
+      {/* Background Slides with Parallax */}
       <div className={styles.bgContainer}>
-        {SLIDES.map((slide, index) => (
-          <div
-            key={index}
-            className={`${styles.bgSlide} ${
-              index === activeSlide ? styles.active : ''
-            } ${index === activeSlide && isAnimating ? styles.fadeOut : ''}`}
-            style={{ backgroundImage: `url(${slide.image})` }}
-          />
-        ))}
-        {/* Overlay */}
+        <AnimatePresence mode="wait">
+          {SLIDES.map((slide, index) => (
+            <motion.div
+              key={index}
+              className={`${styles.bgSlide} ${
+                index === activeSlide ? styles.active : ''
+              }`}
+              style={{
+                backgroundImage: `url(${slide.image})`,
+                transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px) scale(1.05)`,
+              }}
+              initial={index === activeSlide ? { scale: 1.1, opacity: 0 } : { opacity: 0 }}
+              animate={index === activeSlide ? { scale: 1, opacity: 1 } : { opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ 
+                duration: 1.2, 
+                ease: [0.22, 1, 0.36, 1],
+                scale: { duration: 6, ease: 'easeOut' }
+              }}
+            />
+          ))}
+        </AnimatePresence>
         <div className={styles.overlay} />
       </div>
 
       <Container className={styles.container}>
-        <div className={styles.content}>
-          {/* Eyebrow */}
-          <div className={`${styles.eyebrow} ${isAnimating ? styles.fadeUp : ''}`}>
-            {currentSlide.eyebrow}
-          </div>
+        <motion.div 
+          ref={contentRef}
+          className={styles.content}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Eyebrow with character stagger */}
+          <motion.div
+            className={styles.eyebrow}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {currentSlide.eyebrow.split('').map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: i * 0.04 + 0.2 }}
+                style={{ display: 'inline-block' }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
+          </motion.div>
 
-          {/* Headline */}
-          <h1 className={`${styles.headline} ${isAnimating ? styles.fadeUp : ''}`}>
-            <span className={styles.headlineWhite}>{currentSlide.headline}</span>
-            <span className={styles.headlineGold}>{currentSlide.highlight}</span>
-          </h1>
+          {/* Headline with word stagger */}
+          <motion.h1 className={styles.headline}>
+            <motion.span
+              className={styles.headlineWhite}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {splitText(currentSlide.headline)}
+            </motion.span>
+            <motion.span
+              className={styles.headlineGold}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {splitText(currentSlide.highlight)}
+            </motion.span>
+          </motion.h1>
 
-          {/* Body */}
-          <p className={`${styles.body} ${isAnimating ? styles.fadeUp : ''}`}>
+          {/* Body text */}
+          <motion.p
+            className={styles.body}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
             {currentSlide.body}
-          </p>
+          </motion.p>
 
-          {/* CTA Button */}
-          <div className={`${styles.ctaWrapper} ${isAnimating ? styles.fadeUp : ''}`}>
+          {/* CTA Button with hover animation */}
+          <motion.div
+            className={styles.ctaWrapper}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
             <AppButton
               as={Link}
               to={currentSlide.link}
@@ -148,19 +247,54 @@ const HeroSection = () => {
               className={styles.ctaButton}
             >
               {currentSlide.cta}
-              <span className={styles.arrow}>→</span>
+              <motion.span
+                className={styles.arrow}
+                initial={{ x: 0 }}
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
+                →
+              </motion.span>
             </AppButton>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </Container>
 
-      {/* Scroll Indicator */}
-      <div className={styles.scrollIndicator} onClick={scrollToNextSection}>
-        <div className={styles.mouse}>
-          <div className={styles.wheel} />
-        </div>
-        <span className={styles.scrollText}>SCROLL</span>
-      </div>
+      {/* Scroll Indicator with pulse animation */}
+      <motion.div
+        className={styles.scrollIndicator}
+        onClick={scrollToNextSection}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 1.2 }}
+      >
+        <motion.div
+          className={styles.mouse}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity,
+            ease: [0.22, 1, 0.36, 1]
+          }}
+        >
+          <motion.div
+            className={styles.wheel}
+            animate={{ y: [0, 12, 0] }}
+            transition={{ 
+              duration: 1.5, 
+              repeat: Infinity,
+              ease: [0.22, 1, 0.36, 1]
+            }}
+          />
+        </motion.div>
+        <motion.span
+          className={styles.scrollText}
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          SCROLL
+        </motion.span>
+      </motion.div>
     </section>
   );
 };
