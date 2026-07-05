@@ -1,8 +1,7 @@
-// src/components/layout/AppNavbar.jsx
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import useScrollPosition from '../../../hooks/useScrollPosition';
 import config from '../../../utils/config';
 import logo from '../../../assets/logo.png';
@@ -63,51 +62,72 @@ const navItemVariants = {
   })
 };
 
-const dropdownVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: -10, 
-    scale: 0.95 
-  },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    scale: 1,
-    transition: {
-      duration: 0.3,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  },
-  exit: { 
-    opacity: 0, 
-    y: -10, 
-    scale: 0.95,
-    transition: {
-      duration: 0.2
-    }
-  }
-};
-
 const AppNavbar = () => {
   const scrollY = useScrollPosition();
   const [expanded, setExpanded] = useState(false);
   const [hoveredDropdown, setHoveredDropdown] = useState(null);
+  const [openDropdowns, setOpenDropdowns] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const isScrolled = scrollY > 60;
 
   useEffect(() => {
     setIsLoaded(true);
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 992);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const handleMouseEnter = (index) => {
-    if (!expanded) {
+    if (!isMobile && !expanded) {
       setHoveredDropdown(index);
     }
   };
 
   const handleMouseLeave = () => {
+    if (!isMobile) {
+      setHoveredDropdown(null);
+    }
+  };
+
+  const handleToggle = () => {
+    setExpanded(!expanded);
+    if (!expanded) {
+      setHoveredDropdown(null);
+      setOpenDropdowns({});
+    }
+  };
+
+  const handleNavClick = () => {
+    setExpanded(false);
     setHoveredDropdown(null);
+    setOpenDropdowns({});
+  };
+
+  const toggleDropdown = (index, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (isMobile || expanded) {
+      setOpenDropdowns(prev => ({
+        ...prev,
+        [index]: !prev[index]
+      }));
+    }
+  };
+
+  const isDropdownVisible = (index) => {
+    if (isMobile || expanded) {
+      return openDropdowns[index] || false;
+    }
+    return hoveredDropdown === index;
   };
 
   return (
@@ -119,7 +139,7 @@ const AppNavbar = () => {
       <Navbar
         expand="lg"
         expanded={expanded}
-        onToggle={() => setExpanded(!expanded)}
+        onToggle={handleToggle}
         className={`${styles.navbar} ${isScrolled ? styles['navbar--scrolled'] : ''}`}
         fixed="top"
       >
@@ -129,7 +149,7 @@ const AppNavbar = () => {
             as={Link}
             to="/"
             className={styles.brand}
-            onClick={() => setExpanded(false)}
+            onClick={handleNavClick}
           >
             <motion.div 
               className={styles.brandLogo}
@@ -144,11 +164,11 @@ const AppNavbar = () => {
             </motion.div>
           </Navbar.Brand>
 
-          {/* Mobile Toggle with Hamburger Animation */}
+          {/* Mobile Toggle */}
           <Navbar.Toggle 
             aria-controls="main-nav" 
             className={styles.toggle}
-            onClick={() => setExpanded(!expanded)}
+            onClick={handleToggle}
           >
             <motion.div
               className={styles.hamburgerWrapper}
@@ -194,6 +214,7 @@ const AppNavbar = () => {
                       variants={navItemVariants}
                       initial="hidden"
                       animate="visible"
+                      className={styles.navItemWrapper}
                     >
                       <Nav.Item>
                         <NavLink
@@ -202,7 +223,7 @@ const AppNavbar = () => {
                           className={({ isActive }) =>
                             `${styles.navLink} ${isActive ? styles['navLink--active'] : ''} ${isScrolled ? styles['navLink--scrolled'] : ''}`
                           }
-                          onClick={() => setExpanded(false)}
+                          onClick={handleNavClick}
                         >
                           {({ isActive }) => (
                             <>
@@ -224,7 +245,7 @@ const AppNavbar = () => {
 
                 // Dropdown item
                 const { label, items } = navItem;
-                const showDropdown = hoveredDropdown === i && !expanded;
+                const showDropdown = isDropdownVisible(i);
                 
                 return (
                   <motion.div
@@ -233,7 +254,7 @@ const AppNavbar = () => {
                     variants={navItemVariants}
                     initial="hidden"
                     animate="visible"
-                    className={`${styles.dropdownWrapper} ${expanded ? styles['dropdownWrapper--mobile'] : ''}`}
+                    className={`${styles.dropdownWrapper} ${expanded || isMobile ? styles['dropdownWrapper--mobile'] : ''}`}
                     onMouseEnter={() => handleMouseEnter(i)}
                     onMouseLeave={handleMouseLeave}
                   >
@@ -242,40 +263,31 @@ const AppNavbar = () => {
                       id={`nav-dropdown-${label.toLowerCase().replace(/ /g, '-')}`}
                       show={showDropdown}
                       className={`${styles.dropdown} ${isScrolled ? styles['dropdown--scrolled'] : ''}`}
+                      onClick={(e) => toggleDropdown(i, e)}
                     >
-                      <AnimatePresence>
-                        {showDropdown && (
+                      <div className={styles.dropdownMenuWrapper}>
+                        {items.map((sub, j) => (
                           <motion.div
-                            variants={dropdownVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            className={styles.dropdownMenuWrapper}
+                            key={j}
+                            initial={showDropdown ? { opacity: 0, x: -10 } : false}
+                            animate={showDropdown ? { opacity: 1, x: 0 } : false}
+                            transition={{ 
+                              delay: j * 0.03,
+                              duration: 0.3,
+                              ease: [0.22, 1, 0.36, 1]
+                            }}
                           >
-                            {items.map((sub, j) => (
-                              <motion.div
-                                key={j}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ 
-                                  delay: j * 0.03,
-                                  duration: 0.3,
-                                  ease: [0.22, 1, 0.36, 1]
-                                }}
-                              >
-                                <NavDropdown.Item
-                                  as={Link}
-                                  to={sub.to}
-                                  className={styles.dropdownItem}
-                                  onClick={() => setExpanded(false)}
-                                >
-                                  {sub.label}
-                                </NavDropdown.Item>
-                              </motion.div>
-                            ))}
+                            <NavDropdown.Item
+                              as={Link}
+                              to={sub.to}
+                              className={styles.dropdownItem}
+                              onClick={handleNavClick}
+                            >
+                              {sub.label}
+                            </NavDropdown.Item>
                           </motion.div>
-                        )}
-                      </AnimatePresence>
+                        ))}
+                      </div>
                     </NavDropdown>
                   </motion.div>
                 );
@@ -298,7 +310,7 @@ const AppNavbar = () => {
               <Link
                 to="/reservation"
                 className={styles.ctaBtn}
-                onClick={() => setExpanded(false)}
+                onClick={handleNavClick}
               >
                 <motion.span
                   initial={{ x: 0 }}

@@ -191,50 +191,58 @@ const FacilitiesPreview = () => {
                       transition: { duration: 0.3 }
                     }}
                   >
-                    <motion.div
-                      className={styles.cardIcon}
-                      whileHover={{ 
-                        rotate: 8, 
-                        scale: 1.15,
-                        transition: { duration: 0.3 }
-                      }}
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
-                      transition={{ 
-                        duration: 0.5, 
-                        delay: index * 0.08 + 0.2,
-                        ease: [0.22, 1, 0.36, 1]
-                      }}
-                    >
-                      {facility.icon}
-                    </motion.div>
-                    
-                    {facility.tag && (
-                      <motion.div 
-                        className={styles.cardTag}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                    {/* Icon and Title in same row */}
+                    <div className={styles.cardHeader}>
+                      <motion.div
+                        className={styles.cardIconWrapper}
+                        whileHover={{ 
+                          rotate: 8, 
+                          scale: 1.15,
+                          transition: { duration: 0.3 }
+                        }}
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
                         transition={{ 
-                          duration: 0.4, 
-                          delay: index * 0.08 + 0.3 
+                          duration: 0.5, 
+                          delay: index * 0.08 + 0.2,
+                          ease: [0.22, 1, 0.36, 1]
                         }}
                       >
-                        {facility.tag}
+                        <div className={styles.cardIcon}>
+                          {facility.icon}
+                        </div>
                       </motion.div>
-                    )}
+                      
+                      <div className={styles.cardTitleGroup}>
+                        {facility.tag && (
+                          <motion.div 
+                            className={styles.cardTag}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                            transition={{ 
+                              duration: 0.4, 
+                              delay: index * 0.08 + 0.3 
+                            }}
+                          >
+                            {facility.tag}
+                          </motion.div>
+                        )}
+                        
+                        <motion.h3 
+                          className={styles.cardTitle}
+                          initial={{ opacity: 0 }}
+                          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                          transition={{ 
+                            duration: 0.4, 
+                            delay: index * 0.08 + 0.35 
+                          }}
+                        >
+                          {facility.title}
+                        </motion.h3>
+                      </div>
+                    </div>
                     
-                    <motion.h3 
-                      className={styles.cardTitle}
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ 
-                        duration: 0.4, 
-                        delay: index * 0.08 + 0.35 
-                      }}
-                    >
-                      {facility.title}
-                    </motion.h3>
-                    
+                    {/* Description */}
                     <motion.p 
                       className={styles.cardDesc}
                       initial={{ opacity: 0 }}
@@ -247,6 +255,7 @@ const FacilitiesPreview = () => {
                       {facility.desc}
                     </motion.p>
                     
+                    {/* Learn More Link */}
                     <motion.div
                       initial={{ opacity: 0, x: -10 }}
                       animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
